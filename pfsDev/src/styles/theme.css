@@ -1,0 +1,9 @@
+.dark-theme {
+    --background: #121212;
+    --text: #ffffff;
+}
+
+.light-theme {
+    --background: #ffffff;
+    --text: #000000;
+}

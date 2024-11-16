@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>事件处理</title>
+  </head>
+  <body>
+    <button
+      id="button"
+      onmousedown="down(this);"
+      onmouseup="up(this);"
+      onmouseover="over(this)"
+      onmouseout="out(this)"
+      style="
+        border: 1px solid black;
+        padding: 4px;
+        box-sizing: border-box;
+        margin: 2px;
+        width: 50px;
+        border-radius: 10px;
+        background-color: aqua;
+        box-shadow: 10px 0 10px rgba(185, 0, 0, 0.5);
+        "
+    >
+      按钮
+    </button>
+    <script>
+      function down(elem) {
+        elem.style.fontWeight="bold";
+      }
+      function up(elem) {
+        elem.style.fontWeight = "normal";
+      }
+
+      function over(elem) {
+        elem.style.backgroundColor = "yellow";
+      }
+
+      function out(elem) {
+        elem.style.backgroundColor = "aqua";
+      }
+    </script>
+  </body>
+</html>

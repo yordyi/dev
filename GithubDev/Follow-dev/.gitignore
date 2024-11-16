@@ -1,0 +1,16 @@
+node_modules
+dist
+out
+.DS_Store
+*.log*
+.env
+.eslintcache
+.env.*
+
+# Sentry Config File
+.env.sentry-build-plugin
+.vercel
+stats.html
+
+electron.vite.config.*.mjs
+vite.config.*.mjs

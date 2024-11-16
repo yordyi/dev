@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./output.css">
+</head>
+<body>
+    <div class="h-screen w-screen bg-[url('../assets/IMG_8832.PNG')]  bg-cover bg-center bg-no-repeat shadow-lg rounded-lg ">
+        <div class=" flex justify-center items-center bg-black/30 h-full">
+            <h1 class="text-center text-6xl text-white">全屏显示效果</h1>
+        </div>
+    </div>
+    <div class="grid grid-cols-3 gap-4 p-4">
+        <div class="h-64 bg-[url('../assets/IMG_8832.PNG')] bg-cover rounded-lg shadow-lg ">
+            <div class=" flex justify-center items-center bg-black/30 h-full">
+                <h2 class="text-center text-2xl text-white">演示覆盖效果</h2>
+            </div>
+        </div>
+        <div class="h-64 bg-[url('../assets/IMG_8832.PNG')] bg-contain rounded-lg shadow-lg bg-no-repeat bg-gray-700 ">
+            <div class="flex justify-center items-center bg-black/30 h-full">
+                <h2 class="text-center text-yellow-300 text-2xl">演示包含效果</h2>
+            </div>
+        </div>
+        <div class="h-64 bg-[url('../assets/IMG_8832.PNG')] bg-fixed bg-cover rounded-lg shadow-lg bg-no-repeat bg-gray-700 bg-scroll">
+            <div class=" bg-black/30 min-h-[400%]">
+                <h2 class="text-center text-yellow-300 text-2xl">演示包含效果</h2>
+                <h2 class="text-center text-yellow-300 text-2xl">演示包含效果</h2>
+                <h2 class="text-center text-yellow-300 text-2xl">演示包含效果</h2>
+                <h2 class="text-center text-yellow-300 text-2xl">演示包含效果</h2>
+                <h2 class="text-center text-yellow-300 text-2xl">演示包含效果</h2>
+                <h2 class="text-center text-yellow-300 text-2xl">演示包含效果</h2>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增背景滚动效果展示 -->
+    <div class="grid grid-cols-3 gap-4 p-4 mt-8">
+        <div class="h-64 bg-[url('../assets/IMG_8832.PNG')] bg-cover rounded-lg shadow-lg bg-fixed">
+            <div class="flex justify-center items-center bg-black/30 h-full">
+                <h2 class="text-center text-2xl text-white">固定背景效果</h2>
+            </div>
+        </div>
+        <div class="h-64 bg-[url('../assets/IMG_8832.PNG')] bg-cover rounded-lg shadow-lg bg-local overflow-y-scroll">
+            <div class="bg-black/30 min-h-[200%]">
+                <h2 class="text-center text-2xl text-white pt-4">局部滚动效果</h2>
+                <p class="text-white p-4">向下滚动查看效果</p>
+                <p class="text-white p-4">背景会随内容一起滚动</p>
+                <p class="text-white p-4">继续滚动...</p>
+                <p class="text-white p-4">观察背景变化</p>
+            </div>
+        </div>
+        <div class="h-64 bg-[url('../assets/IMG_8832.PNG')] bg-cover rounded-lg shadow-lg bg-scroll">
+            <div class="flex justify-center items-center bg-black/30 h-full">
+                <h2 class="text-center text-2xl text-white">滚动背景效果</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加一些内容使页面可滚动 -->
+    <div class="p-8 space-y-6">
+        <div class="bg-gray-100 p-6 rounded-lg">
+            <h2 class="text-3xl font-bold mb-4">背景属性说明</h2>
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-600">bg-fixed（固定背景）</h3>
+                    <p class="mt-2">背景图像相对于视口固定。即使滚动页面，背景也会保持在相同位置。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-600">bg-local（局部滚动）</h3>
+                    <p class="mt-2">背景图像相对于元素内容固定。如果元素有滚动机制，背景会随着元素内容一起滚动。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-600">bg-scroll（滚动背景）</h3>
+                    <p class="mt-2">背景图像会随着页面滚动而滚动。这是默认行为。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 添加一些占位内容 -->
+        <div class="space-y-4">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-2xl font-bold mb-3">示例内容 1</h3>
+                <p class="text-gray-600">向下滚动页面，观察上方不同区块的背景图片行为变化...</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-2xl font-bold mb-3">示例内容 2</h3>
+                <p class="text-gray-600">继续向下滚动，注意观察固定背景、局部滚动和普通滚动的区别...</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-2xl font-bold mb-3">示例内容 3</h3>
+                <p class="text-gray-600">这些额外的内容块帮助页面产生滚动效果，让你更好地理解背景属性的特性。</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+

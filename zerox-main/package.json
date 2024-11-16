@@ -1,0 +1,46 @@
+{
+  "name": "zerox",
+  "version": "1.0.29",
+  "description": "ocr documents using gpt-4o-mini",
+  "main": "node-zerox/dist/index.js",
+  "scripts": {
+    "build": "tsc -p node-zerox/tsconfig.json",
+    "postinstall": "node node-zerox/scripts/install-dependencies.js",
+    "prepublishOnly": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tylermaran",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "child_process": "^1.0.2",
+    "fs-extra": "^11.2.0",
+    "libreoffice-convert": "^1.6.0",
+    "mime-types": "^2.1.35",
+    "os": "^0.1.2",
+    "p-limit": "^3.1.0",
+    "path": "^0.12.7",
+    "pdf2pic": "^3.1.1",
+    "util": "^0.12.5"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/mime-types": "^2.1.4",
+    "@types/node": "^20.14.11",
+    "typescript": "^5.5.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/getomni-ai/zerox.git"
+  },
+  "keywords": [
+    "ocr",
+    "document",
+    "llm"
+  ],
+  "types": "node-zerox/dist/index.d.ts",
+  "bugs": {
+    "url": "https://github.com/getomni-ai/zerox/issues"
+  },
+  "homepage": "https://github.com/getomni-ai/zerox#readme"
+}

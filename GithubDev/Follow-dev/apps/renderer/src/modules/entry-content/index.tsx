@@ -1,0 +1,436 @@
+import type { FallbackRender } from "@sentry/react"
+import { ErrorBoundary } from "@sentry/react"
+import type { FC } from "react"
+import { memo, useEffect, useLayoutEffect, useMemo, useRef } from "react"
+import { useHotkeys } from "react-hotkeys-hook"
+import { useTranslation } from "react-i18next"
+
+import {
+  ReadabilityStatus,
+  setReadabilityStatus,
+  useEntryInReadabilityStatus,
+  useEntryIsInReadability,
+  useEntryReadabilityContent,
+} from "~/atoms/readability"
+import { useUISettingKey } from "~/atoms/settings/ui"
+import { m } from "~/components/common/Motion"
+import { ShadowDOM } from "~/components/common/ShadowDOM"
+import { AutoResizeHeight } from "~/components/ui/auto-resize-height"
+import { HTML } from "~/components/ui/markdown"
+import { Toc } from "~/components/ui/markdown/components/Toc"
+import { useInPeekModal } from "~/components/ui/modal/inspire/PeekModal"
+import { RootPortal } from "~/components/ui/portal"
+import { ScrollArea } from "~/components/ui/scroll-area"
+import { isWebBuild, ROUTE_FEED_PENDING } from "~/constants"
+import { shortcuts } from "~/constants/shortcuts"
+import { useEntryReadabilityToggle } from "~/hooks/biz/useEntryActions"
+import { useRouteParams, useRouteParamsSelector } from "~/hooks/biz/useRouteParams"
+import { useAuthQuery, useTitle } from "~/hooks/common"
+import { stopPropagation } from "~/lib/dom"
+import { FeedViewType } from "~/lib/enum"
+import { getNewIssueUrl } from "~/lib/issues"
+import { cn } from "~/lib/utils"
+import type { ActiveEntryId, FeedModel } from "~/models"
+import {
+  useIsSoFWrappedElement,
+  useWrappedElement,
+  WrappedElementProvider,
+} from "~/providers/wrapped-element-provider"
+import { Queries } from "~/queries"
+import { useEntry } from "~/store/entry"
+import { useFeedById, useFeedHeaderTitle } from "~/store/feed"
+
+import { LoadingWithIcon } from "../../components/ui/loading"
+import { EntryPlaceholderDaily } from "../ai/ai-daily/EntryPlaceholderDaily"
+import { setEntryContentScrollToTop, setEntryTitleMeta } from "./atoms"
+import { EntryPlaceholderLogo } from "./components/EntryPlaceholderLogo"
+import { EntryTitle } from "./components/EntryTitle"
+import { SourceContentPanel } from "./components/SourceContentView"
+import { SupportCreator } from "./components/SupportCreator"
+import { EntryHeader } from "./header"
+import { EntryContentLoading } from "./loading"
+import { EntryContentProvider } from "./provider"
+
+export const EntryContent = ({
+  entryId,
+  noMedia,
+  compact,
+}: {
+  entryId: ActiveEntryId
+  noMedia?: boolean
+  compact?: boolean
+}) => {
+  const title = useFeedHeaderTitle()
+  const { feedId, view } = useRouteParams()
+
+  useTitle(title)
+  if (!entryId) {
+    return (
+      <m.div
+        className="center size-full flex-col"
+        initial={{ opacity: 0.01, y: 300 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <EntryPlaceholderLogo />
+        {feedId === ROUTE_FEED_PENDING && view === FeedViewType.Articles && (
+          <EntryPlaceholderDaily view={view} />
+        )}
+      </m.div>
+    )
+  }
+
+  return <EntryContentRender entryId={entryId} noMedia={noMedia} compact={compact} />
+}
+
+export const EntryContentRender: Component<{
+  entryId: string
+  noMedia?: boolean
+  compact?: boolean
+}> = ({ entryId, noMedia, className, compact }) => {
+  const { t } = useTranslation()
+
+  const { error, data, isPending } = useAuthQuery(Queries.entries.byId(entryId), {
+    staleTime: 300_000,
+  })
+
+  const entry = useEntry(entryId)
+  useTitle(entry?.entries.title)
+
+  const feed = useFeedById(entry?.feedId) as FeedModel
+  const readerRenderInlineStyle = useUISettingKey("readerRenderInlineStyle")
+  const summary = useAuthQuery(
+    Queries.ai.summary({
+      entryId,
+      language: entry?.settings?.translation,
+    }),
+    {
+      enabled: !!entry?.settings?.summary,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      meta: {
+        persist: true,
+      },
+    },
+  )
+
+  const readerFontFamily = useUISettingKey("readerFontFamily")
+  const view = useRouteParamsSelector((route) => route.view)
+
+  const isInReadabilityMode = useEntryIsInReadability(entryId)
+  const scrollerRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    scrollerRef.current?.scrollTo(0, 0)
+  }, [entryId])
+
+  useHotkeys(shortcuts.entry.scrollDown.key, () => {
+    scrollerRef.current?.scrollBy(0, window.innerHeight / 2)
+  })
+
+  useHotkeys(shortcuts.entry.scrollUp.key, () => {
+    scrollerRef.current?.scrollBy(0, -window.innerHeight / 2)
+  })
+
+  const isPeekModal = useInPeekModal()
+
+  const contentAccessories = useMemo(
+    () => (isPeekModal ? undefined : <ContainerToc key={entryId} />),
+    [entryId, isPeekModal],
+  )
+  const stableRenderStyle = useMemo(
+    () =>
+      readerFontFamily
+        ? {
+            fontFamily: readerFontFamily,
+          }
+        : undefined,
+    [readerFontFamily],
+  )
+  const mediaInfo = useMemo(
+    () =>
+      Object.fromEntries(
+        (entry?.entries.media ?? data?.entries.media)
+          ?.filter((m) => m.type === "photo")
+          .map((cur) => [
+            cur.url,
+            {
+              width: cur.width,
+              height: cur.height,
+            },
+          ]) ?? [],
+      ),
+    [entry?.entries.media, data?.entries.media],
+  )
+
+  if (!entry) return null
+
+  const content = entry?.entries.content ?? data?.entries.content
+
+  return (
+    <EntryContentProvider
+      entryId={entry.entries.id}
+      feedId={entry.feedId}
+      audioSrc={entry.entries?.attachments?.[0].url}
+      view={view}
+    >
+      <EntryHeader
+        entryId={entry.entries.id}
+        view={0}
+        className="h-[55px] shrink-0 px-3 @container"
+        compact={compact}
+      />
+
+      <div className="relative flex size-full flex-col overflow-hidden">
+        <ScrollArea.ScrollArea
+          mask={false}
+          rootClassName={cn("h-0 min-w-0 grow overflow-y-auto @container", className)}
+          scrollbarClassName="mr-[1.5px]"
+          viewportClassName="p-5"
+          ref={scrollerRef}
+        >
+          <div
+            style={stableRenderStyle}
+            className="duration-200 ease-in-out animate-in fade-in slide-in-from-bottom-24 f-motion-reduce:fade-in-0 f-motion-reduce:slide-in-from-bottom-0"
+            key={entry.entries.id}
+          >
+            <article
+              data-testid="entry-render"
+              onContextMenu={stopPropagation}
+              className="relative m-auto min-w-0 max-w-[550px] @3xl:max-w-[70ch]"
+            >
+              <EntryTitle entryId={entryId} compact={compact} />
+
+              <WrappedElementProvider boundingDetection>
+                <div className="mx-auto mb-32 mt-8 max-w-full cursor-auto select-text break-all text-[0.94rem]">
+                  <TitleMetaHandler entryId={entry.entries.id} />
+                  {(summary.isLoading || summary.data) && (
+                    <div className="my-8 space-y-1 rounded-lg border px-4 py-3">
+                      <div className="flex items-center gap-2 font-medium text-zinc-800 dark:text-neutral-400">
+                        <i className="i-mgc-magic-2-cute-re align-middle" />
+                        <span>{t("entry_content.ai_summary")}</span>
+                      </div>
+                      <AutoResizeHeight spring className="text-sm leading-relaxed">
+                        {summary.isLoading ? SummaryLoadingSkeleton : summary.data}
+                      </AutoResizeHeight>
+                    </div>
+                  )}
+                  <ErrorBoundary fallback={RenderError}>
+                    {!isInReadabilityMode ? (
+                      <ShadowDOM>
+                        <HTML
+                          mediaInfo={mediaInfo}
+                          noMedia={noMedia}
+                          accessory={contentAccessories}
+                          as="article"
+                          className="prose !max-w-full dark:prose-invert prose-h1:text-[1.6em] prose-h1:font-bold"
+                          style={stableRenderStyle}
+                          renderInlineStyle={readerRenderInlineStyle}
+                        >
+                          {content}
+                        </HTML>
+                      </ShadowDOM>
+                    ) : (
+                      <ReadabilityContent entryId={entryId} />
+                    )}
+                  </ErrorBoundary>
+                </div>
+              </WrappedElementProvider>
+
+              {entry.settings?.readability && (
+                <ReadabilityAutoToggleEffect id={entry.entries.id} url={entry.entries.url ?? ""} />
+              )}
+
+              {!content && (
+                <div className="center mt-16 min-w-0">
+                  {isPending ? (
+                    <EntryContentLoading icon={feed?.siteUrl!} />
+                  ) : error ? (
+                    <div className="center flex min-w-0 flex-col gap-2">
+                      <i className="i-mgc-close-cute-re text-3xl text-red-500" />
+                      <span className="font-sans text-sm">Network Error</span>
+
+                      <pre className="mt-6 w-full overflow-auto whitespace-pre-wrap break-all">
+                        {error.message}
+                      </pre>
+                    </div>
+                  ) : (
+                    <NoContent id={entry.entries.id} url={entry.entries.url ?? ""} />
+                  )}
+                </div>
+              )}
+
+              {feed?.ownerUserId && <SupportCreator entryId={entryId} />}
+            </article>
+          </div>
+        </ScrollArea.ScrollArea>
+        <SourceContentPanel src={entry.entries.url} />
+      </div>
+    </EntryContentProvider>
+  )
+}
+
+const SummaryLoadingSkeleton = (
+  <div className="space-y-2">
+    <span className="block h-3 w-full animate-pulse rounded-xl bg-zinc-200 dark:bg-neutral-800" />
+    <span className="block h-3 w-full animate-pulse rounded-xl bg-zinc-200 dark:bg-neutral-800" />
+    <span className="block h-3 w-full animate-pulse rounded-xl bg-zinc-200 dark:bg-neutral-800" />
+  </div>
+)
+
+const TitleMetaHandler: Component<{
+  entryId: string
+}> = ({ entryId }) => {
+  const {
+    entries: { title: entryTitle },
+    feedId,
+  } = useEntry(entryId)!
+
+  const { title: feedTitle } = useFeedById(feedId)!
+
+  const atTop = useIsSoFWrappedElement()
+  useEffect(() => {
+    setEntryContentScrollToTop(true)
+  }, [entryId])
+  useLayoutEffect(() => {
+    setEntryContentScrollToTop(atTop)
+  }, [atTop])
+
+  useEffect(() => {
+    if (entryTitle && feedTitle) {
+      setEntryTitleMeta({ title: entryTitle, description: feedTitle })
+    }
+    return () => {
+      setEntryTitleMeta(null)
+    }
+  }, [entryId, entryTitle, feedTitle])
+  return null
+}
+
+const ReadabilityContent = ({ entryId }: { entryId: string }) => {
+  const { t } = useTranslation()
+  const result = useEntryReadabilityContent(entryId)
+
+  return (
+    <div className="grow">
+      {result ? (
+        <p className="rounded-xl border p-3 text-sm opacity-80">
+          <i className="i-mgc-information-cute-re mr-1 translate-y-[2px]" />
+          {t("entry_content.readability_notice")}
+        </p>
+      ) : (
+        <div className="center mt-16 flex flex-col gap-2">
+          <LoadingWithIcon size="large" icon={<i className="i-mgc-sparkles-2-cute-re" />} />
+          <span className="text-sm">{t("entry_content.fetching_content")}</span>
+        </div>
+      )}
+
+      <HTML
+        as="article"
+        className="prose dark:prose-invert prose-h1:text-[1.6em] prose-h1:font-bold"
+      >
+        {result?.content ?? ""}
+      </HTML>
+    </div>
+  )
+}
+
+const NoContent: FC<{
+  id: string
+  url: string
+}> = ({ id, url }) => {
+  const status = useEntryInReadabilityStatus(id)
+  const { t } = useTranslation("app")
+
+  if (status !== ReadabilityStatus.INITIAL && status !== ReadabilityStatus.FAILURE) {
+    return null
+  }
+  return (
+    <div className="center">
+      <div className="space-y-2 text-balance text-center text-sm text-zinc-400">
+        {(isWebBuild || status === ReadabilityStatus.FAILURE) && (
+          <span>{t("entry_content.no_content")}</span>
+        )}
+        {isWebBuild && (
+          <div>
+            <span>{t("entry_content.web_app_notice")}</span>
+          </div>
+        )}
+        {url && window.electron && <ReadabilityAutoToggleEffect url={url} id={id} />}
+      </div>
+    </div>
+  )
+}
+
+const ReadabilityAutoToggleEffect = ({ url, id }: { url: string; id: string }) => {
+  const toggle = useEntryReadabilityToggle({
+    id,
+    url,
+  })
+  const onceRef = useRef(false)
+
+  useEffect(() => {
+    if (!onceRef.current) {
+      onceRef.current = true
+      setReadabilityStatus({
+        [id]: ReadabilityStatus.INITIAL,
+      })
+      toggle()
+    }
+  }, [toggle])
+
+  return null
+}
+
+const RenderError: FallbackRender = ({ error }) => {
+  const { t } = useTranslation()
+  const nextError = typeof error === "string" ? new Error(error) : (error as Error)
+  return (
+    <div className="center mt-16 flex flex-col gap-2">
+      <i className="i-mgc-close-cute-re text-3xl text-red-500" />
+      <span className="font-sans text-sm">
+        {t("entry_content.render_error")} {nextError.message}
+      </span>
+      <a
+        href={getNewIssueUrl({
+          body: [
+            "### Error",
+            "",
+            nextError.message,
+            "",
+            "### Stack",
+            "",
+            "```",
+            nextError.stack,
+            "```",
+          ].join("\n"),
+          label: "bug",
+          title: "Render error",
+        })}
+        target="_blank"
+        rel="noreferrer"
+      >
+        {t("entry_content.report_issue")}
+      </a>
+    </div>
+  )
+}
+
+const ContainerToc: FC = memo(() => {
+  const wrappedElement = useWrappedElement()
+  return (
+    <RootPortal to={wrappedElement!}>
+      <div className="group absolute right-[-130px] top-0 h-full w-[100px]">
+        <div className="sticky top-0">
+          <Toc
+            className={cn(
+              "flex flex-col items-end animate-in fade-in-0 slide-in-from-bottom-12 easing-spring spring-soft",
+              "max-h-[calc(100vh-100px)] overflow-auto scrollbar-none",
+
+              "@[500px]:-translate-x-12",
+              "@[700px]:-translate-x-12 @[800px]:-translate-x-16 @[900px]:translate-x-0 @[900px]:items-start",
+            )}
+          />
+        </div>
+      </div>
+    </RootPortal>
+  )
+})

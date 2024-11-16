@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>操作dom</title>
+  </head>
+  <body>
+    <div class="content">这是一段文字</div>
+    <div></div>
+    <script>
+      let divElement = document.querySelectorAll("content");
+      divElement.innerHTML = "这是新的文字";
+      console.log(divElement.innerHTML)
+      // console.log(document.title)
+      // document.title = "新的标题"
+      // console.log(document.title)
+    </script>
+  </body>
+</html>

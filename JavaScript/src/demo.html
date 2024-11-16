@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./output.css">
+  </head>
+  <body>
+    <div class="Dialog w-96 h-64 p-6 bg-gray-950 rounded-lg shadow border border-gray-800 flex-col justify-start items-start gap-4 inline-flex">
+      <div class="X w-4 h-4 relative rounded"></div>
+      <div class="Header self-stretch h-16 flex-col justify-start items-start gap-1.5 flex">
+        <div class="Title self-stretch text-gray-50 text-lg font-semibold font-['Inter'] leading-none">Edit profile</div>
+        <div class="Description self-stretch text-gray-400 text-sm font-normal font-['Inter'] leading-tight">Make changes to your profile here. Click save when you're done.</div>
+      </div>
+      <div class="SlotContent self-stretch h-20 flex-col justify-start items-end gap-4 flex">
+        <div class="Row self-stretch h-9 justify-center items-center gap-4 inline-flex">
+          <div class="Label h-3.5 justify-end items-start flex">
+            <div class="Label text-gray-50 text-sm font-medium font-['Inter'] leading-none">Name</div>
+          </div>
+          <div class="Input grow shrink basis-0 h-9 px-3 py-1 bg-gray-950 rounded-md shadow border border-gray-800 justify-start items-center flex">
+            <div class="Placeholder w-56 text-gray-400 text-sm font-normal font-['Inter'] leading-tight">Placeholder</div>
+          </div>
+        </div>
+        <div class="Row self-stretch h-9 justify-center items-center gap-4 inline-flex">
+          <div class="Label h-3.5 justify-end items-start flex">
+            <div class="Label text-gray-50 text-sm font-medium font-['Inter'] leading-none">Username</div>
+          </div>
+          <div class="Input grow shrink basis-0 h-9 px-3 py-1 bg-gray-950 rounded-md shadow border border-gray-800 justify-start items-center flex">
+            <div class="Placeholder w-56 text-gray-400 text-sm font-normal font-['Inter'] leading-tight">Placeholder</div>
+          </div>
+        </div>
+      </div>
+      <div class="SlotFooter self-stretch justify-end items-center inline-flex">
+        <div class="Button px-4 py-2 bg-gray-50 rounded-md shadow justify-center items-center gap-2 flex">
+          <div class="Button text-gray-900 text-sm font-medium font-['Inter'] leading-tight">Save actions</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <span onmouseover="changeToAbout();" style="cursor: pointer;">关于我</span>
+      <span onmouseover="changeToExps();" style="cursor: pointer;">学经历</span>
+    </div>
+    <hr />
+    <div>
+      <span id="about">大家好,我是yoryi</span>
+      <span id="exps" style="display: none"
+        >我是一名学生,即将毕业</span>
+    </div>
+    <script>
+      function changeToExps() {
+        let dajiahao = document.querySelector("#about");
+        let woshixuesehng = document.querySelector("#exps");
+        dajiahao.style = "display:none";
+        woshixuesehng.style = "display:block";
+      }
+      function changeToAbout() {
+        let dajiahao = document.querySelector("#about");
+        let woshixuesehng = document.querySelector("#exps");
+        dajiahao.style = "display:block";
+        woshixuesehng.style = "display:none";
+      }
+    </script>
+  </body>
+</html>

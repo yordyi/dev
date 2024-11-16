@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./output.css" />
+  </head>
+  <body>
+    <div class="flex flex-wrap w-full p-4 gap-2 mt-4">
+      <div class="flex-none m-1 w-1/3 bg-pink-400">一定要换行啊</div>
+      <div class="flex-none m-1 w-1/3 bg-pink-400">一定要换行啊</div>
+      <div class="flex-none m-1 w-1/3 bg-pink-400">一定要换行啊</div>
+    </div>
+    <article class="prose">
+      <h1>美国大选</h1>
+      <p>
+        美国大选 特朗普 哈里斯 美国大选 特朗普 哈里斯美国大选 特朗普 哈里斯美国大选 特朗普
+        哈里斯美国大选 特朗普 哈里斯美国大选 特朗普 哈里斯
+      </p>
+      <ul>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+      </ul>
+    </article>
+
+    <div>
+      <!-- 正常间距：从左到右 -->
+      <div class="flex space-x-4 justify-center">
+        <div>1</div>
+        <!-- 右边有间距 -->
+        <div>2</div>
+        <!-- 右边有间距 -->
+        <div>3</div>
+      </div>
+
+      <!-- 反向间距：从右到左 -->
+      <div class="flex space-x-4 space-x-reverse justify-center">
+        <div>1</div>
+        <!-- 左边有间距 -->
+        <div>2</div>
+        <!-- 左边有间距 -->
+        <div>3</div>
+      </div>
+    </div>
+    <!-- 基础示例：中间元素会自动占据剩余空间 -->
+    <div class="flex gap-2 bg-gray-100 p-4">
+      <div class="bg-blue-500 p-4 text-white w-20">固定宽度</div>
+      <div class="flex-1 bg-blue-500 p-4 text-white">我会自动扩展</div>
+      <div class="bg-blue-500 p-4 text-white w-20">固定宽度</div>
+    </div>
+
+    <!-- 多个 flex-1 会平均分配空间 -->
+    <div class="flex gap-2 bg-gray-100 p-4 mt-4">
+      <div class="flex-1 bg-green-500 p-4 text-white">1/3</div>
+      <div class="flex-1 bg-green-500 p-4 text-white">1/3</div>
+      <div class="flex-1 bg-green-500 p-4 text-white">1/3</div>
+    </div>
+
+    <!-- flex-1 vs flex-2 比例分配 -->
+    <div class="flex gap-2 bg-gray-100 p-4 mt-4">
+      <div class="flex-1 bg-purple-500 p-4 text-white">1份</div>
+      <div class="flex-2 bg-purple-500 p-4 text-white">2份</div>
+      <div class="flex-1 bg-purple-500 p-4 text-white">1份</div>
+    </div>
+  </body>
+</html>

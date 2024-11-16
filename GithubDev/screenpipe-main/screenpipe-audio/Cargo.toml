@@ -1,0 +1,102 @@
+[package]
+name = "screenpipe-audio"
+version = { workspace = true }
+authors = { workspace = true }
+description = { workspace = true }
+repository = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Cross-platform audio capture
+# cpal = "0.15.2"
+# Temporary hack check https://github.com/RustAudio/cpal/pull/894
+# cpal = { git = "https://github.com/louis030195/cpal-d.git", rev = "6751589" }
+cpal = { git = "https://github.com/mediar-ai/cpal.git" }
+
+# Wav encoding
+hound = "3.5"
+
+# Cli ! shouldn't be required if using as lib
+clap = { version = "4.3", features = ["derive"] }
+
+# Dates
+chrono = { version = "0.4.31", features = ["serde"] }
+
+# Local Embeddings + STT
+# TODO: feature metal, cuda, etc. see https://github.com/huggingface/candle/blob/main/candle-core/Cargo.toml
+candle = { workspace = true }
+candle-nn = { workspace = true }
+candle-transformers = { workspace = true }
+vad-rs = "0.1.3"
+tokenizers = { workspace = true }
+anyhow = "1.0.86"
+byteorder = "1.5.0"
+hf-hub = "0.3.2"
+# https://github.com/pdeljanov/Symphonia/tree/master?tab=readme-ov-file#optimizations 
+symphonia = { version = "0.5.4", features = ["aac", "isomp4", "opt-simd"] }
+rand = "0.8.5"
+rubato = "0.15.0"
+
+# Log 
+log = { workspace = true }
+tracing = { workspace = true }
+env_logger = "0.10"
+
+# Bytes
+bytemuck = "1.16.1"
+
+# Async
+tokio = { workspace = true }
+
+# Detect speech/silence
+webrtc-vad = "0.4.0"
+
+# Deepgram
+reqwest = { workspace = true }
+
+screenpipe-core = { path = "../screenpipe-core" }
+
+# crossbeam
+crossbeam = { workspace = true }
+
+[target.'cfg(target_os = "windows")'.dependencies]
+ort = { version = "2.0.0-rc.5", features = ["download-binaries", "copy-dylibs", "directml", "cuda"] }
+esaxx-rs = "0.1.10"
+samplerate = { version = "0.2.4" }
+libsamplerate-sys = "0.1.10"
+
+[target.'cfg(target_os = "macos")'.dependencies]
+once_cell = "1.17.1"
+objc = "0.2.7"
+
+[dev-dependencies]
+tempfile = "3.3.0"
+infer = "0.15"
+criterion = { workspace = true }
+memory-stats = "1.0"
+
+[features]
+metal = ["candle/metal", "candle-nn/metal", "candle-transformers/metal"]
+cuda = ["candle/cuda", "candle-nn/cuda", "candle-transformers/cuda"]
+mkl = ["candle/mkl", "candle-nn/mkl", "candle-transformers/mkl"]
+
+[[bin]]
+name = "screenpipe-audio"
+path = "src/bin/screenpipe-audio.rs"
+
+[[bench]]
+name = "pcm_decode_benchmark"
+harness = false
+
+[[bench]]
+name = "record_and_transcribe_benchmark"
+harness = false
+
+

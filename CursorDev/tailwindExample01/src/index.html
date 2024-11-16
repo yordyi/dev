@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>超级贪吃蛇大冒险2.0</title>
+    <link rel="stylesheet" href="output.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+    <style>
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .float { animation: float 3s ease-in-out infinite; }
+        #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center min-h-screen p-4">
+    <div id="particles"></div>
+    <div class="text-center bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-8 shadow-2xl transform perspective-1000">
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 float">超级贪吃蛇大冒险2.0</h1>
+        <div class="relative">
+            <canvas id="gameCanvas" class="border-4 border-white rounded-lg shadow-lg transform rotate-x-5 rotate-y-5" width="400" height="400"></canvas>
+            <div id="overlay" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 rounded-lg">
+                <button id="startBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-110 shadow-lg">
+                    开始游戏
+                </button>
+            </div>
+        </div>
+        <div class="mt-6 text-white">
+            <p class="text-xl mb-2">得分: <span id="score">0</span></p>
+            <p class="text-xl mb-2">最高分: <span id="highScore">0</span></p>
+            <p class="text-xl mb-2">剩余时间: <span id="timeLeft">60</span>秒</p>
+            <p class="text-sm">使用 W, A, S, D 键或虚拟方向键控制蛇的移动</p>
+            <p class="text-sm">按空格键暂停游戏</p>
+        </div>
+        <div class="mt-4">
+            <button id="muteBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-110 shadow-lg mr-2">
+                静音
+            </button>
+            <select id="modeSelect" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-110 shadow-lg mr-2">
+                <option value="classic">经典模式</option>
+                <option value="timed">计时模式</option>
+                <option value="obstacle">障碍物模式</option>
+            </select>
+            <select id="difficultySelect" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-110 shadow-lg">
+                <option value="easy">简单</option>
+                <option value="medium" selected>中等</option>
+                <option value="hard">困难</option>
+            </select>
+        </div>
+        <div class="mt-4">
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1" class="w-full">
+            <label for="volumeSlider" class="text-white">音量</label>
+        </div>
+        <div class="mt-4">
+            <button id="multiplayerBtn" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-110 shadow-lg">
+                多人对战
+            </button>
+        </div>
+    </div>
+
+    <div id="virtualControls" class="fixed bottom-4 left-4 md:hidden">
+        <button id="upBtn" class="bg-gray-500 text-white p-4 rounded-full m-2">&uarr;</button>
+        <br>
+        <button id="leftBtn" class="bg-gray-500 text-white p-4 rounded-full m-2">&larr;</button>
+        <button id="downBtn" class="bg-gray-500 text-white p-4 rounded-full m-2">&darr;</button>
+        <button id="rightBtn" class="bg-gray-500 text-white p-4 rounded-full m-2">&rarr;</button>
+    </div>
+
+    <div id="leaderboard" class="fixed top-4 right-4 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-4 shadow-2xl">
+        <h2 class="text-2xl font-bold text-white mb-2">排行榜</h2>
+        <ol id="leaderboardList" class="text-white list-decimal list-inside"></ol>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const overlay = document.getElementById('overlay');
+        const startBtn = document.getElementById('startBtn');
+        const scoreElement = document.getElementById('score');
+        const highScoreElement = document.getElementById('highScore');
+        const timeLeftElement = document.getElementById('timeLeft');
+        const muteBtn = document.getElementById('muteBtn');
+        const difficultySelect = document.getElementById('difficultySelect');
+        const modeSelect = document.getElementById('modeSelect');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const multiplayerBtn = document.getElementById('multiplayerBtn');
+        const leaderboardList = document.getElementById('leaderboardList');
+        const gridSize = 20;
+        const tileCount = canvas.width / gridSize;
+        let snake = [{x: 10, y: 10}];
+        let food = {x: 15, y: 15};
+        let obstacles = [];
+        let dx = 0;
+        let dy = 0;
+        let score = 0;
+        let highScore = localStorage.getItem('highScore') || 0;
+        let gameLoop;
+        let isPaused = false;
+        let isMuted = false;
+        let difficulty = 'medium';
+        let gameMode = 'classic';
+        let timeLeft = 60;
+        let volume = 1;
+        let isMultiplayer = false;
+
+        const eatSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3');
+        const gameOverSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-player-losing-or-failing-2042.mp3');
+
+        highScoreElement.textContent = highScore;
+
+        function startGame() {
+            overlay.style.display = 'none';
+            resetGame();
+            gameLoop = setInterval(drawGame, getSpeed());
+            if (gameMode === 'timed') {
+                startTimer();
+            }
+        }
+
+        function getSpeed() {
+            switch (difficulty) {
+                case 'easy': return 150;
+                case 'medium': return 100;
+                case 'hard': return 50;
+                default: return 100;
+            }
+        }
+
+        function drawGame() {
+            if (isPaused) return;
+            clearCanvas();
+            moveSnake();
+            drawSnake();
+            drawFood();
+            if (gameMode === 'obstacle') {
+                drawObstacles();
+            }
+            checkCollision();
+        }
+
+        function clearCanvas() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function moveSnake() {
+            const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+            snake.unshift(head);
+            if (head.x === food.x && head.y === food.y) {
+                generateFood();
+                score += 10;
+                scoreElement.textContent = score;
+                if (!isMuted) {
+                    eatSound.volume = volume;
+                    eatSound.play();
+                }
+                if (score > highScore) {
+                    highScore = score;
+                    highScoreElement.textContent = highScore;
+                    localStorage.setItem('highScore', highScore);
+                }
+            } else {
+                snake.pop();
+            }
+        }
+
+        function drawSnake() {
+            snake.forEach((segment, index) => {
+                const gradient = ctx.createLinearGradient(
+                    segment.x * gridSize,
+                    segment.y * gridSize,
+                    (segment.x + 1) * gridSize,
+                    (segment.y + 1) * gridSize
+                );
+                gradient.addColorStop(0, `hsl(${120 + index * 5}, 100%, 50%)`);
+                gradient.addColorStop(1, `hsl(${120 + index * 5}, 100%, 30%)`);
+                ctx.fillStyle = gradient;
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                ctx.shadowBlur = 5;
+                ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize - 2, gridSize - 2);
+                ctx.shadowBlur = 0;
+                ctx.strokeStyle = 'white';
+                ctx.strokeRect(segment.x * gridSize, segment.y * gridSize, gridSize - 2, gridSize - 2);
+            });
+        }
+
+        function drawFood() {
+            ctx.fillStyle = 'red';
+            ctx.shadowColor = 'rgba(255, 0, 0, 0.5)';
+            ctx.shadowBlur = 10;
+            ctx.beginPath();
+            ctx.arc(
+                (food.x + 0.5) * gridSize,
+                (food.y + 0.5) * gridSize,
+                gridSize / 2 - 2,
+                0,
+                Math.PI * 2
+            );
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+
+        function drawObstacles() {
+            ctx.fillStyle = 'gray';
+            obstacles.forEach(obstacle => {
+                ctx.fillRect(obstacle.x * gridSize, obstacle.y * gridSize, gridSize, gridSize);
+            });
+        }
+
+        function generateFood() {
+            do {
+                food = {
+                    x: Math.floor(Math.random() * tileCount),
+                    y: Math.floor(Math.random() * tileCount)
+                };
+            } while (snake.some(segment => segment.x === food.x && segment.y === food.y) ||
+                     obstacles.some(obstacle => obstacle.x === food.x && obstacle.y === food.y));
+        }
+
+        function generateObstacles() {
+            obstacles = [];
+            for (let i = 0; i < 5; i++) {
+                let obstacle;
+                do {
+                    obstacle = {
+                        x: Math.floor(Math.random() * tileCount),
+                        y: Math.floor(Math.random() * tileCount)
+                    };
+                } while (snake.some(segment => segment.x === obstacle.x && segment.y === obstacle.y) ||
+                         food.x === obstacle.x && food.y === obstacle.y ||
+                         obstacles.some(obs => obs.x === obstacle.x && obs.y === obstacle.y));
+                obstacles.push(obstacle);
+            }
+        }
+
+        function checkCollision() {
+            const head = snake[0];
+            if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
+                gameOver();
+                return;
+            }
+            for (let i = 1; i < snake.length; i++) {
+                if (head.x === snake[i].x && head.y === snake[i].y) {
+                    gameOver();
+                    return;
+                }
+            }
+            if (gameMode === 'obstacle') {
+                if (obstacles.some(obstacle => head.x === obstacle.x && head.y === obstacle.y)) {
+                    gameOver();
+                    return;
+                }
+            }
+        }
+
+        function gameOver() {
+            clearInterval(gameLoop);
+            overlay.style.display = 'flex';
+            startBtn.textContent = '再来一局';
+            if (!isMuted) {
+                gameOverSound.volume = volume;
+                gameOverSound.play();
+            }
+            updateLeaderboard(score);
+        }
+
+        function resetGame() {
+            snake = [{x: 10, y: 10}];
+            generateFood();
+            if (gameMode === 'obstacle') {
+                generateObstacles();
+            }
+            dx = 0;
+            dy = 0;
+            score = 0;
+            scoreElement.textContent = score;
+            timeLeft = 60;
+            timeLeftElement.textContent = timeLeft;
+            isPaused = false;
+        }
+
+        function startTimer() {
+            const timer = setInterval(() => {
+                if (!isPaused) {
+                    timeLeft--;
+                    timeLeftElement.textContent = timeLeft;
+                    if (timeLeft <= 0) {
+                        clearInterval(timer);
+                        gameOver();
+                    }
+                }
+            }, 1000);
+        }
+
+        function updateLeaderboard(newScore) {
+            let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+            leaderboard.push(newScore);
+            leaderboard.sort((a, b) => b - a);
+            leaderboard = leaderboard.slice(0, 5);
+            localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+            displayLeaderboard();
+        }
+
+        function displayLeaderboard() {
+            const leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+            leaderboardList.innerHTML = '';
+            leaderboard.forEach((score, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${index + 1}. ${score}`;
+                leaderboardList.appendChild(li);
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ') {
+                isPaused = !isPaused;
+                return;
+            }
+            if (isPaused) return;
+            switch(e.key) {
+                case 'w': if (dy !== 1) { dx = 0; dy = -1; } break;
+                case 's': if (dy !== -1) { dx = 0; dy = 1; } break;
+                case 'a': if (dx !== 1) { dx = -1; dy = 0; } break;
+                case 'a': if (dx !== 1) { dx = -1; dy = 0; } break;
+                case 'd': if (dx !== -1) { dx = 1; dy = 0; } break;
+            }
+        });
+
+        startBtn.addEventListener('click', startGame);
+
+        muteBtn.addEventListener('click', () => {
+            isMuted = !isMuted;
+            muteBtn.textContent = isMuted ? '取消静音' : '静音';
+        });
+
+        difficultySelect.addEventListener('change', (e) => {
+            difficulty = e.target.value;
+            if (gameLoop) {
+                clearInterval(gameLoop);
+                gameLoop = setInterval(drawGame, getSpeed());
+            }
+        });
+
+        modeSelect.addEventListener('change', (e) => {
+            gameMode = e.target.value;
+            resetGame();
+        });
+
+        volumeSlider.addEventListener('input', (e) => {
+            volume = e.target.value;
+            eatSound.volume = volume;
+            gameOverSound.volume = volume;
+        });
+
+        multiplayerBtn.addEventListener('click', () => {
+            isMultiplayer = !isMultiplayer;
+            multiplayerBtn.textContent = isMultiplayer ? '返回单人模式' : '多人对战';
+            // 这里可以添加多人对战的逻辑
+        });
+
+        // 虚拟方向键控制
+        document.getElementById('upBtn').addEventListener('click', () => { if (dy !== 1) { dx = 0; dy = -1; } });
+        document.getElementById('downBtn').addEventListener('click', () => { if (dy !== -1) { dx = 0; dy = 1; } });
+        document.getElementById('leftBtn').addEventListener('click', () => { if (dx !== 1) { dx = -1; dy = 0; } });
+        document.getElementById('rightBtn').addEventListener('click', () => { if (dx !== -1) { dx = 1; dy = 0; } });
+
+        // 初始设置
+        clearCanvas();
+        drawSnake();
+        drawFood();
+        displayLeaderboard();
+
+        // 粒子效果
+        const particlesCanvas = document.createElement('canvas');
+        particlesCanvas.id = 'particles';
+        document.body.appendChild(particlesCanvas);
+
+        const particlesCtx = particlesCanvas.getContext('2d');
+        particlesCanvas.width = window.innerWidth;
+        particlesCanvas.height = window.innerHeight;
+
+        const particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push({
+                x: Math.random() * particlesCanvas.width,
+                y: Math.random() * particlesCanvas.height,
+                radius: Math.random() * 3 + 1,
+                dx: (Math.random() - 0.5) * 2,
+                dy: (Math.random() - 0.5) * 2
+            });
+        }
+
+        function drawParticles() {
+            particlesCtx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
+            particlesCtx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+            particles.forEach(particle => {
+                particlesCtx.beginPath();
+                particlesCtx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                particlesCtx.fill();
+
+                particle.x += particle.dx;
+                particle.y += particle.dy;
+
+                if (particle.x < 0 || particle.x > particlesCanvas.width) particle.dx = -particle.dx;
+                if (particle.y < 0 || particle.y > particlesCanvas.height) particle.dy = -particle.dy;
+            });
+            requestAnimationFrame(drawParticles);
+        }
+
+        drawParticles();
+
+        // 3D效果
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(100, 100);
+        document.body.appendChild(renderer.domElement);
+
+        const geometry = new THREE.TorusGeometry(3, 1, 16, 100);
+        const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+        const torus = new THREE.Mesh(geometry, material);
+        scene.add(torus);
+
+        camera.position.z = 5;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            torus.rotation.x += 0.01;
+            torus.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // 响应式设计
+        window.addEventListener('resize', () => {
+            particlesCanvas.width = window.innerWidth;
+            particlesCanvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "Google Photos to Craft",
+  "id": "com.example.google-photos-to-craft",
+  "api": "1.0.0",
+  "main": "extension.js",
+  "ui": {
+    "root": "ui/main.html",
+    "height": 300,
+    "width": 400
+  },
+  "networkDomains": [
+    "photoslibrary.googleapis.com"
+  ],
+  "author": "Your Name",
+  "description": "从Google Photos导入相册到Craft文档",
+  "version": "1.0.0"
+}

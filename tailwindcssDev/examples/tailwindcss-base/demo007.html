@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>后台管理系统 Demo</title>
+    <link rel="stylesheet" href="./output.css">
+    <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1e40af',
+          }
+        }
+      }
+    }
+    </script>
+  </head>
+  <!-- 使用 min-h-screen 确保最小高度为整个视口高度 -->
+  <!-- flex 布局使侧边栏和主内容区并排显示 -->
+  <body class="bg-gray-100">
+    <div class="min-h-screen flex">
+      <!-- 侧边栏: bg-gray-800 深色背景, w-64 固定宽度, flex-shrink-0 防止收缩
+           hidden md:block 响应式隐藏/显示 -->
+      <aside class="bg-gray-800 w-64 flex-shrink-0 hidden md:block">
+        <div class="p-4">
+          <h1 class="text-white text-2xl font-bold">管理系统</h1>
+        </div>
+        <!-- mt-4 上外边距 -->
+        <nav class="mt-4">
+          <!-- flex items-center 垂直居中对齐
+               hover:bg-gray-700 悬停效果
+               transition 添加过渡动画 -->
+          <a
+            href="#"
+            class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition transform transition-all duration-300 hover:scale-105"
+          >
+            <svg
+              class="w-5 h-5 mr-3"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              ></path>
+            </svg>
+            仪表盘
+          </a>
+          <!-- bg-gray-700 当前选中项背景色 -->
+          <a
+            href="#"
+            class="flex items-center px-4 py-3 bg-gray-700 text-white"
+          >
+            <svg
+              class="w-5 h-5 mr-3"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+              ></path>
+            </svg>
+            用户管理
+          </a>
+        </nav>
+      </aside>
+
+      <!-- 主内容区: flex-1 占满剩余空间
+           flex flex-col 垂直排列子元素 -->
+      <div class="flex-1 flex flex-col">
+        <!-- 顶部导航: shadow-sm 轻微阴影 -->
+        <header class="bg-white shadow-sm">
+          <div class="flex items-center justify-between px-6 py-3">
+            <!-- md:hidden 在中等屏幕以上隐藏 -->
+            <button class="md:hidden text-gray-500 hover:text-gray-600">
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
+
+            <!-- 搜索框: flex-1 占满剩余空间 -->
+            <div class="flex-1 mx-4">
+              <div class="relative">
+                <!-- focus:outline-none focus:border-blue-500 聚焦效果 -->
+                <input
+                  type="text"
+                  class="w-full pl-10 pr-4 py-2 rounded-lg border focus:outline-none focus:border-blue-500"
+                  placeholder="搜索..."
+                />
+                <!-- absolute 绝对定位搜索图标 -->
+                <div class="absolute left-3 top-2.5">
+                  <svg
+                    class="w-5 h-5 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- 用户菜单 -->
+            <div class="flex items-center">
+              <!-- relative 相对定位用于徽标定位 -->
+              <button class="relative p-1 hover:bg-gray-100 rounded-full">
+                <svg
+                  class="w-6 h-6 text-gray-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                  ></path>
+                </svg>
+                <!-- absolute 绝对定位红点提示 -->
+                <span
+                  class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500"
+                ></span>
+              </button>
+
+              <button class="ml-3 flex items-center">
+                <!-- object-cover 保持图片比例填充 -->
+                <img
+                  class="h-8 w-8 rounded-full object-cover"
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  alt="用户头像"
+                />
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <!-- 主要内容: overflow-y-auto 垂直滚动 -->
+        <main class="flex-1 overflow-y-auto p-6">
+          <!-- 统计卡片: grid 网格布局, gap-6 网格间距 -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6"
+          >
+            <div class="bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg shadow-sm p-6">
+              <div class="flex items-center">
+                <div class="p-3 rounded-full bg-blue-100 text-blue-500">
+                  <svg
+                    class="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                    ></path>
+                  </svg>
+                </div>
+                <div class="ml-4">
+                  <h2 class="text-gray-600 text-sm">总用户</h2>
+                  <p class="text-2xl font-semibold text-gray-800">12,345</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 更多统计卡片... -->
+          </div>
+
+          <!-- 数据表格 -->
+          <div class="bg-white rounded-lg shadow-sm">
+            <div class="px-6 py-4 border-b border-gray-200">
+              <h2 class="text-lg font-medium text-gray-800">用户列表</h2>
+            </div>
+
+            <!-- overflow-x-auto 水平滚动 -->
+            <div class="overflow-x-auto">
+              <!-- min-w-full 最小宽度100% -->
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      用户
+                    </th>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      角色
+                    </th>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      状态
+                    </th>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      操作
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  <!-- hover:bg-gray-50 鼠标悬停效果 -->
+                  <tr class="group hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <img
+                          class="h-10 w-10 rounded-full filter hover:brightness-90"
+                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                          alt=""
+                        />
+                        <div class="ml-4 group-hover:text-blue-600">
+                          <div class="text-sm font-medium text-gray-900">
+                            张三
+                          </div>
+                          <div class="text-sm text-gray-500">
+                            zhangsan@example.com
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                      >
+                        管理员
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
+                      >
+                        在线
+                      </span>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      <!-- hover:text-blue-900 鼠标悬停文字颜色 -->
+                      <button class="text-blue-600 hover:text-blue-900">
+                        编辑
+                      </button>
+                      <button class="ml-2 text-red-600 hover:text-red-900">
+                        删除
+                      </button>
+                    </td>
+                  </tr>
+                  <!-- 更多行... -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- 分页 -->
+            <div class="px-6 py-4 border-t border-gray-200">
+              <div class="flex items-center justify-between">
+                <!-- sm:hidden 在小屏幕显示简化版分页 -->
+                <div class="flex-1 flex justify-between sm:hidden">
+                  <button
+                    class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                  >
+                    上一页
+                  </button>
+                  <button
+                    class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                  >
+                    下一页
+                  </button>
+                </div>
+                <!-- hidden sm:flex-1 在大屏幕显示完整分页 -->
+                <div
+                  class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between"
+                >
+                  <div>
+                    <p class="text-sm text-gray-700">
+                      显示第 <span class="font-medium">1</span> 到
+                      <span class="font-medium">10</span> 条，共
+                      <span class="font-medium">97</span> 条
+                    </p>
+                  </div>
+                  <div>
+                    <!-- -space-x-px 负间距消除双边框 -->
+                    <nav
+                      class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+                      aria-label="分页导航" <!-- 添加无障碍标签 -->
+                    >
+                      <!-- 上一页按钮 -->
+                      <button
+                        class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                      >
+                        <span class="sr-only">上一页</span> <!-- 屏幕阅读器专用文本 -->
+                        <!-- 左箭头SVG图标 -->
+                        <svg
+                          class="h-5 w-5" <!-- 固定宽高 -->
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor" <!-- 使用当前文本颜色 -->
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                      </button>
+
+                      <!-- 页码按钮 -->
+                      <button
+                        class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" <!-- 使用flex布局居中对齐 -->
+                      >
+                        1
+                      </button>
+                      <button
+                        class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                      >
+                        2
+                      </button>
+                      <button
+                        class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                      >
+                        3
+                      </button>
+
+                      <!-- 下一页按钮 -->
+                      <button
+                        class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                      >
+                        <span class="sr-only">下一页</span>
+                        <!-- 右箭头SVG图标 -->
+                        <svg
+                          class="h-5 w-5"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                      </button>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

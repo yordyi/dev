@@ -1,0 +1,40 @@
+.frame{
+    display: flex;
+
+
+}
+.right{
+    flex: none;
+    width: 300px;
+
+}
+.left{
+    flex:auto;
+    display: flex;
+    justify-content: end;
+
+
+}
+.item {
+    margin-left: 10px;
+    flex: none;
+    width: 100px;
+    text-align: center;
+
+
+}
+.welcome{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aqua;
+    height: 300px;
+
+}
+.text{
+    font-size: larger;
+    font-weight: bolder;
+    width: 300px; height: 40px;
+    text-align: center;
+
+}

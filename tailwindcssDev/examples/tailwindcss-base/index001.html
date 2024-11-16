@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品展示</title>
+    <link rel="stylesheet" href="../src/output.css">
+</head>
+<body class="bg-gray-100">
+    <!-- 固定背景的英雄区域 -->
+    <div class="h-screen bg-[url('../assets/IMG_8832.PNG')] bg-fixed bg-cover bg-center">
+        <div class="h-full bg-black bg-opacity-50 flex items-center justify-center">
+            <h1 class="text-white text-6xl font-bold">滚动时背景固定</h1>
+        </div>
+    </div>
+
+    <!-- 产品展示区 -->
+    <div class="container mx-auto py-20 px-4">
+        <!-- 第一个产品 -->
+        <div class="mb-20 bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="h-96 bg-[url('../assets/IMG_8832.PNG')] bg-cover bg-center"></div>
+            <div class="p-8 bg-white bg-opacity-90">
+                <h2 class="text-3xl font-bold mb-4">背景覆盖示例</h2>
+                <p class="text-gray-600">使用 bg-cover 确保图片填满容器</p>
+            </div>
+        </div>
+
+        <!-- 第二个产品 -->
+        <div class="mb-20">
+            <div class="h-96 bg-blue-100 bg-[url('../assets/IMG_8832.PNG')] bg-contain bg-center bg-no-repeat bg-local">
+                <div class="h-full overflow-y-scroll p-8">
+                    <h2 class="text-3xl font-bold mb-4">局部滚动背景</h2>
+                    <p class="text-gray-600">使用 bg-local 实现容器内滚动</p>
+                    <!-- 添加一些内容使其可滚动 -->
+                    <div class="space-y-4">
+                        <p>滚动看看效果...</p>
+                        <p>继续滚动...</p>
+                        <p>背景会跟着一起滚动</p>
+                        <!-- 重复多次让内容可滚动 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第三个产品 -->
+        <div class="h-96 bg-[url('../assets/IMG_8832.PNG')] bg-scroll bg-center relative">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-500 bg-opacity-50">
+                <div class="p-8">
+                    <h2 class="text-white text-3xl font-bold mb-4">渐变背景叠加</h2>
+                    <p class="text-white">使用 bg-opacity 和渐变效果</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部区域 -->
+    <footer class="bg-gray-900 text-white p-20 text-center">
+        <p>滚动到底部了</p>
+    </footer>
+</body>
+</html>

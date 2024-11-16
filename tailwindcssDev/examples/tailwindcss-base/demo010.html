@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>定位演示</title>
+    <link rel="stylesheet" href="./output.css">
+</head>
+<body class="p-8">
+    <!-- 相对定位示例 -->
+    <div class="mb-20">
+        <h2 class="text-xl font-bold mb-4">相对定位示例</h2>
+        <div class="bg-gray-200 p-4">
+            <div class="bg-blue-500 text-white p-4 w-32 relative left-8 top-4">
+                相对定位的盒子
+            </div>
+            <div class="bg-gray-400 p-4 mt-4">
+                后面的内容会保持原位
+            </div>
+        </div>
+    </div>
+
+    <!-- 绝对定位示例 -->
+    <div class="mb-20">
+        <h2 class="text-xl font-bold mb-4">绝对定位示例</h2>
+        <div class="relative bg-gray-200 p-4 h-40">  <!-- 父元素需要relative -->
+            <div class="absolute top-0 right-0 bg-red-500 text-white p-4">
+                右上角
+            </div>
+            <div class="absolute bottom-0 left-0 bg-green-500 text-white p-4">
+                左下角
+            </div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-purple-500 text-white p-4">
+                居中
+            </div>
+        </div>
+    </div>
+
+    <!-- 实际应用示例 -->
+    <div>
+        <h2 class="text-xl font-bold mb-4">实际应用示例</h2>
+        <div class="relative inline-block">
+            <img src="https://picsum.photos/300/200" alt="示例图片" class="rounded-lg">
+            <span class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full text-sm">
+                热门
+            </span>
+            <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4">
+                图片说明文字
+            </div>
+        </div>
+    </div>
+
+    <!-- 固定定位示例 -->
+    <div class="mb-20">
+        <h2 class="text-xl font-bold mb-4">固定定位示例</h2>
+        <div class="fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full shadow-lg cursor-pointer hover:bg-blue-700">
+            返回顶部
+        </div>
+    </div>
+
+    <!-- 粘性定位示例 -->
+    <div class="mb-20">
+        <h2 class="text-xl font-bold mb-4">粘性定位示例</h2>
+        <!-- 外层容器设置相对定位 -->
+        <div class="relative h-[500px] border border-gray-200 rounded-lg overflow-auto">
+            <!-- 粘性定位元素 -->
+            <div class="sticky top-0 bg-yellow-500 text-white p-4 z-10">
+                我是粘性标题 - 滚动试试 👆
+            </div>
+            <!-- 实际内容区域 -->
+            <div class="p-4 space-y-4">
+                <!-- 添加足够多的内容以产生滚动 -->
+                ${Array(20).fill().map((_, index) => `
+                    <div class="bg-white p-4 rounded shadow-sm">
+                        <h3 class="font-bold">第 ${index + 1} 个内容块</h3>
+                        <p class="text-gray-600">这是一些测试文字，用来展示粘性定位效果。当你滚动时，上面的黄色标题会始终保持在顶部。</p>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    </div>
+    <section class="mb-20">
+        <div class="border-collapse border border-gray-200">
+            <h1>解释border的知识</h1>
+        </div>
+    </section>
+    <section class="mb-20">
+        <div class="border-collapse border border-gray-200">
+            <h1>解释border的知识</h1>
+        </div>
+    </section>
+    <section class="mb-20">
+        <div class="border-collapse border border-gray-200">
+            <h1>解释border的知识</h1>
+        </div>
+    </section>
+    <section class="mb-20">
+        <div class="border-collapse border border-gray-200">
+            <h1>解释border的知识</h1>
+        </div>
+    </section>    <section class="mb-20">    <section class="mb-20"></section>
+        <div class="border-collapse border border-gray-200">
+            <h1>解释border的知识</h1>
+        </div>
+    </section>
+    <section class="mb-20">
+        <div class="border-collapse border border-gray-200">
+            <h1>解释border的知识</h1>
+        </div>
+    </section></section>
+        <div class="border-collapse border border-gray-200">
+            <h1>解释border的知识</h1>
+        </div>
+    </section>
+    <section class="mb-20">
+        <div class="border-collapse border border-gray-200">
+            <h1>解释border的知识</h1>
+        </div>
+    </section>
+</body>
+</html> 

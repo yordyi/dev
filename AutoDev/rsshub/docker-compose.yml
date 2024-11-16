@@ -1,0 +1,31 @@
+version: '3'
+services:
+  rsshub:
+    image: diygod/rsshub:chromium-bundled
+    ports:
+      - '1200:1200'
+    environment:
+      - NODE_ENV=production
+      - CACHE_TYPE=memory
+      - CACHE_EXPIRE=1
+      - DEBUG=RSSHub:*,RSSHub
+      - LOGGER_LEVEL=debug
+      - TWITTER_USERNAME=${TWITTER_USERNAME}
+      - TWITTER_PASSWORD=${TWITTER_PASSWORD}
+      - TWITTER_AUTH_TOKEN=${TWITTER_AUTH_TOKEN}
+    env_file:
+      - .env
+    volumes:
+      - ./config:/app/config:ro
+    restart: always
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis-data:/data
+    restart: always
+
+volumes:
+  redis-data:

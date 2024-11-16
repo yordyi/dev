@@ -1,0 +1,59 @@
+{
+  "name": "@enclosed/app-client",
+  "type": "module",
+  "version": "1.6.9",
+  "packageManager": "pnpm@9.11.0",
+  "description": "Enclosed frontend client",
+  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CorentinTh/enclosed"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "test": "pnpm run test:unit",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest watch",
+    "test:e2e": "playwright test",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@corentinth/chisels": "^1.0.2",
+    "@enclosed/lib": "workspace:*",
+    "@kobalte/core": "^0.13.4",
+    "@solid-primitives/i18n": "^2.1.1",
+    "@solid-primitives/storage": "^4.2.1",
+    "@solidjs/router": "^0.14.3",
+    "@unocss/reset": "^0.62.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "jszip": "^3.10.1",
+    "lodash-es": "^4.17.21",
+    "solid-js": "^1.8.11",
+    "tailwind-merge": "^2.5.2",
+    "unocss-preset-animations": "^1.1.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.0.0",
+    "@iconify-json/tabler": "^1.1.120",
+    "@playwright/test": "^1.46.1",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^22.5.0",
+    "eslint": "^9.10.0",
+    "jsdom": "^25.0.0",
+    "typescript": "^5.3.3",
+    "unocss": "^0.62.2",
+    "vite": "^5.0.11",
+    "vite-plugin-solid": "^2.8.2",
+    "vitest": "^2.0.5"
+  }
+}

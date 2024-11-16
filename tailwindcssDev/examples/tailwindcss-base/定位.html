@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS定位详解</title>
+    <link rel="stylesheet" href="./output.css" />
+  </head>
+  <body class="p-8">
+    <!-- 1. Container 响应式容器 -->
+    <div class="container mx-auto bg-blue-100 p-4 mb-8">
+      <h2 class="font-bold mb-2">1. Container 响应式容器</h2>
+      <p>🎯 就像一个智能的盒子,会根据屏幕尺寸自动调整宽度</p>
+    </div>
+
+    <!-- 2. Relative 相对定位 -->
+    <div class="bg-green-100 p-4 mb-8">
+      <h2 class="font-bold mb-2">2. Relative 相对定位</h2>
+      <div class="relative bg-green-200 p-4">
+        我是相对定位的父元素
+        <div class="relative left-8 top-2 bg-green-300 p-2">
+          🚶 相对定位就像走路,从原来的位置移动一段距离
+        </div>
+      </div>
+    </div>
+    <!-- 3. Absolute 绝对定位 -->
+    <div class="bg-yellow-100 p-4 mb-8">
+      <h2 class="font-bold mb-2">3. Absolute 绝对定位</h2>
+      <div class="relative h-32 bg-yellow-200">
+        相对定位父容器
+        <div class="absolute top-0 right-0 bg-yellow-300 p-2">
+          🎯 绝对定位像射箭,直接瞄准目标位置
+        </div>
+      </div>
+    </div>
+    <!-- 4. Fixed 固定定位 -->
+    <div class="bg-red-100 p-4 mb-8">
+      <h2 class="font-bold mb-2">4. Fixed 固定定位</h2>
+      <div class="fixed bottom-4 right-4 bg-red-300 p-2">📌 固定定位像图钉,钉在屏幕上不动</div>
+    </div>
+
+    <!-- 5. Sticky 粘性定位 -->
+    <div class="bg-purple-100 p-4">
+      <h2 class="font-bold mb-2">5. Sticky 粘性定位</h2>
+      <div class="h-64 overflow-auto bg-purple-200 p-4">
+        <div class="sticky top-0 bg-purple-300 p-2">🍯 粘性定位像蜂蜜,滚动到边界就粘住</div>
+        <p class="mt-4">滚动内容...</p>
+        <p class="mt-4">滚动内容...</p>
+        <p class="mt-4">滚动内容...</p>
+        <!-- 更多内容 -->
+      </div>
+    </div>
+  </body>
+</html>

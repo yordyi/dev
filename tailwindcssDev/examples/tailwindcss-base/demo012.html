@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./output.css">
+    <title>Overflow 示例</title>
+</head>
+<body class="p-8 bg-gray-50">
+    <div class="grid grid-cols-3 gap-4">
+        <!-- overflow-auto 示例 -->
+        <div class="space-y-2">
+            <h3 class="font-bold text-lg">overflow-auto 🚗</h3>
+            <div class="overflow-auto h-32 p-4 bg-white rounded-lg shadow">
+                <p class="text-gray-600">内容适中时没有滚动条</p>
+                <p class="text-gray-600">内容超出时</p>
+                <p class="text-gray-600">自动显示滚动条</p>
+                <p class="text-gray-600">就像智能电梯</p>
+                <p class="text-gray-600">需要时才会运行</p>
+                <p class="text-gray-600">很聪明对吧？</p>
+            </div>
+        </div>
+
+        <!-- overflow-hidden 示例 -->
+        <div class="space-y-2">
+            <h3 class="font-bold text-lg">overflow-hidden ✂️</h3>
+            <div class="overflow-hidden h-32 p-4 bg-white rounded-lg shadow">
+                <p class="text-gray-600">这是一个相框</p>
+                <p class="text-gray-600">超出的内容</p>
+                <p class="text-gray-600">会被直接裁掉</p>
+                <p class="text-gray-600">看不见我啦</p>
+                <p class="text-gray-600">完全看不见</p>
+            </div>
+        </div>
+
+        <!-- overflow-scroll 示例 -->
+        <div class="space-y-2">
+            <h3 class="font-bold text-lg">overflow-scroll 📜</h3>
+            <div class="overflow-scroll h-32 p-4 bg-white rounded-lg shadow">
+                <p class="text-gray-600">我是卷轴</p>
+                <p class="text-gray-600">不管内容多少</p>
+                <p class="text-gray-600">总是显示滚动条</p>
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

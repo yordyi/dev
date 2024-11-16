@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flex Learn</title>
+    <style>
+      .box {
+        justify-content: center;
+        align-items: center;
+        flex:none;
+        display: flex;
+        width: 30%;
+        height: 61.8%;
+        background-color: rgb(90, 22, 159);
+        margin: 0px 10px;
+        border-radius: 5%;
+      }
+      .boxcopy {
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        flex: none;
+        color: aqua;
+        width: 30%;
+        height: 61.8%;
+        background-color: brown;
+        margin: 10px;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5%;
+      }
+
+      .bigbox {
+        display: flex;
+        /* 水平对齐 */
+        justify-content: center;
+        align-items: center;
+        /* flex:none; */
+        width: 1200px;
+        height: 400px;
+        background-color: rgb(119, 105, 131);
+        margin:0 auto ;
+        padding: 10px;
+        border-radius: 5%;
+      }
+  
+    </style>
+  </head>
+
+  <body>
+    <h1 style="text-align: center; color: red">this is a box</h1>
+    <div class="bigbox">
+      <div class="box">
+        <div class="boxcopy">this is box01</div>
+        <div class="boxcopy">this is box02</div>
+        <div class="boxcopy">this is box03</div>
+      </div>
+      <div class="box">
+        <div class="boxcopy">this is box01</div>
+        <div class="boxcopy">this is box02</div>
+        <div class="boxcopy">this is box03</div>
+      </div>
+    
+  </body>
+</html>

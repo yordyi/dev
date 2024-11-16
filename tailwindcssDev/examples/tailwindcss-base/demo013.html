@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh" class="dark" data-persist-theme>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./output.css" />
+    <title>震惊！资深前端揭秘布局定位暴利玩法 🔥</title>
+    <style>
+        .force-scroll {
+            overflow-y: scroll;
+            scrollbar-width: thin;
+        }
+        .force-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .force-scroll::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+    </style>
+    <script>
+      // 检查并应用保存的主题
+      if (localStorage.theme === 'dark') {
+        document.documentElement.classList.add('dark')
+      }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <!-- 固定顶部导航 -->
+    <nav class="fixed top-0 w-full bg-white shadow-md z-50 p-4">
+        <h1 class="text-xl font-bold text-center">前端布局秘籍速成班 🚀</h1>
+    </nav>
+
+    <!-- 主容器 -->
+    <div class="container mx-auto mt-20 p-4">
+        <!-- 侧边栏 - 粘性定位 -->
+        <div class="sticky top-20 float-left w-64 bg-white p-4 rounded-lg shadow-lg mr-4">
+            <h3 class="font-bold text-lg mb-2">目录速览 📚</h3>
+            <ul class="space-y-2 text-gray-600">
+                <li>🎯 container 容器布局</li>
+                <li>🎨 relative 相对定位</li>
+                <li>✨ absolute 绝对定位</li>
+                <li>📌 fixed 固定定位</li>
+                <li>🎪 sticky 粘性定位</li>
+                <li>🌊 overflow 溢出控制</li>
+            </ul>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="ml-72">
+            <div class="relative bg-white rounded-xl shadow-lg p-6 mb-6">
+                <div class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full text-sm">
+                    爆款 🔥
+                </div>
+
+                <div class="space-y-6 force-scroll h-[calc(100vh-120px)] pr-4">
+                    <!-- Container 部分 -->
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h2 class="text-xl font-bold text-blue-800">震惊！Container 布局一招年入百万！</h2>
+                        <p class="text-gray-600">
+                            不用自适应？老板直接让你卷铺盖走人！用了container，响应式布局轻松搞定！💼
+                        </p>
+                    </div>
+
+                    <!-- Relative 部分 -->
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h2 class="text-xl font-bold text-green-800">relative 相对定位，产品经理都说好！</h2>
+                        <p class="text-gray-600">
+                            相对定位轻松掌握，界面排版随心所欲，老板都说这是天才之作！🎨
+                        </p>
+                    </div>
+
+                    <!-- Absolute 部分 -->
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <h2 class="text-xl font-bold text-purple-800">absolute 绝对定位，薪资翻三倍！</h2>
+                        <p class="text-gray-600">
+                            掌握绝对定位，让你的页面脱离文档流，自由得像一只海鸥！✨
+                        </p>
+                    </div>
+
+                    <!-- Fixed 部分 -->
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <h2 class="text-xl font-bold text-yellow-800">fixed 固定定位，转化率暴涨！</h2>
+                        <p class="text-gray-600">
+                            某电商用了固定导航栏后，销量直接起飞！这波操作太强了！📌
+                        </p>
+                    </div>
+
+                    <!-- Sticky 部分 -->
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <h2 class="text-xl font-bold text-red-800">sticky 粘性定位，用户体验提升300%！</h2>
+                        <p class="text-gray-600">
+                            粘性定位一出，产品经理都跪了！这才是真正的用户体验！🎪
+                        </p>
+                    </div>
+
+                    <!-- Overflow 部分 -->
+                    <div class="bg-indigo-50 p-4 rounded-lg">
+                        <h2 class="text-xl font-bold text-indigo-800">overflow 溢出控制，面试必考！</h2>
+                        <p class="text-gray-600">
+                            auto、hidden、scroll三剑客，让你的页面永远不再溢出！🌊
+                        </p>
+                    </div>
+
+                    <!-- 营销话术 -->
+                    <div class="bg-pink-50 p-4 rounded-lg">
+                        <h2 class="text-xl font-bold text-pink-800">限时优惠！</h2>
+                        <p class="text-gray-600">
+                            点赞+收藏+转发，解锁隐藏CSS技巧！今日特惠，速来！💫
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

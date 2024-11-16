@@ -1,0 +1,5 @@
+google-photos-to-craft/
+  ├── extension.js
+  ├── manifest.json
+  └── ui/
+      └── main.html

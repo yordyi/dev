@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .text {
+        text-decoration: underline;
+        font-weight: bolder;
+        font-size: 28px;
+        color: brown;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content">这是一段文字</div>
+    <button onclick="change()">点我</button>
+
+
+ 
+    <script>
+      console.log(document.body)
+      let change = function () {
+        let divEle = document.querySelector("#content");
+        divEle.innerHTML = "我已经被修改了";
+        // divEle.style.color = "red";
+        // divEle.style.fontSize="48px"
+        // divEle.style.backgroundColor="blue"
+        // divEle.style.padding="12px"
+        // divEle.style.borderRadius="10px"
+        divEle.className="text"
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>我要换掉这个标题</title>
+    
+  </head>
+  <body>
+    <div>
+        <h1>这是body部分</h1>
+    </div>
+    <script>
+        console.log(window);
+        console.log(window.location.href);
+        console.log(window.innerHeight);
+        console.log(window.innerWidth);
+        // window.location.href="https:www.google.com"
+        console.log(document);
+        console.dir(document);
+        document.title="我不换这个标题了"
+        console.log(document.title);
+        console.log(document.body)
+        console.log(document.body.innerHTML)
+        document.body.innerHTML="this is body innerHTML"
+      </script>
+  </body>
+
+</html>

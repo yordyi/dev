@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apple Style Parallax</title>
+    <link rel="stylesheet" href="./output.css" />
+  </head>
+  <body class="bg-black">
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 w-full bg-black/80 backdrop-blur-md z-50">
+      <div class="max-w-7xl mx-auto px-4 h-12 flex items-center">
+        <span class="text-white">Apple Style</span>
+      </div>
+    </nav>
+
+    <!-- 第一个视差区域 -->
+    <section class="h-[150vh] relative overflow-hidden">
+      <div class="sticky top-0 h-screen flex items-center justify-center">
+        <div
+          class="text-center space-y-4 z-10 transform transition-transform duration-1000"
+          id="hero-text"
+        >
+          <h1 class="text-7xl font-bold text-white">iPhone 15 Pro</h1>
+          <p class="text-3xl text-gray-200">前所未有的强大</p>
+        </div>
+        <div class="absolute inset-0">
+          <img
+            src="../assets/IMG_8832.PNG"
+            alt="iPhone"
+            class="w-full h-full object-cover scale-100 transition-all duration-1000"
+            id="hero-img"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- 第二个视差区域 -->
+    <section class="h-[150vh] relative overflow-hidden bg-white">
+      <div class="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0">
+          <img
+            src="../assets/IMG_8832.PNG"
+            alt="iPhone"
+            class="w-full h-full object-cover transition-all duration-1000"
+            id="second-img"
+          />
+        </div>
+        <div class="relative z-10 max-w-4xl mx-auto px-4 flex gap-8" id="feature-cards">
+          <div
+            class="bg-black/80 backdrop-blur-md p-8 rounded-2xl transform transition-all duration-1000"
+          >
+            <h2 class="text-3xl font-bold text-white mb-4">震撼性能</h2>
+            <p class="text-xl text-gray-300">搭载 A17 Pro 芯片</p>
+          </div>
+          <div
+            class="bg-black/80 backdrop-blur-md p-8 rounded-2xl transform transition-all duration-1000"
+          >
+            <h2 class="text-3xl font-bold text-white mb-4">专业相机</h2>
+            <p class="text-xl text-gray-300">4800万像素主摄</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY
+        const heroImg = document.getElementById('hero-img')
+        const heroText = document.getElementById('hero-text')
+        const secondImg = document.getElementById('second-img')
+        const featureCards = document.getElementById('feature-cards')
+
+        // 第一个区域的效果
+        const scale = 1 + scrolled * 0.001 // 增加缩放系数
+        const limitedScale = Math.min(scale, 1.5)
+        heroImg.style.transform = `scale(${limitedScale})`
+        heroImg.style.filter = `brightness(${1 - scrolled * 0.001})` // 添加亮度变化
+
+        // 文字上移效果
+        heroText.style.transform = `translateY(${-scrolled * 0.5}px)`
+        heroText.style.opacity = 1 - scrolled * 0.002
+
+        // 第二个区域的效果
+        const secondSection = document.querySelector('section:nth-child(3)')
+        const secondOffset = secondSection.offsetTop
+        const relativeScroll = scrolled - secondOffset
+
+        if (relativeScroll > 0) {
+          secondImg.style.transform = `scale(${1 + relativeScroll * 0.0005}) 
+                                        translateY(${relativeScroll * 0.1}px)`
+
+          // 卡片动画
+          const cards = featureCards.children
+          Array.from(cards).forEach((card, index) => {
+            card.style.transform = `translateX(${relativeScroll * (index ? 0.2 : -0.2)}px)
+                                      translateY(${-relativeScroll * 0.1}px)`
+            card.style.opacity = 1 - relativeScroll * 0.001
+          })
+        }
+      })
+    </script>
+  </body>
+</html>

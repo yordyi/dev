@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{name}}'s Resume - Software Developer</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #3498db 3px solid;
+        }
+        header h1 {
+            margin: 0;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav ul {
+            padding: 0;
+            list-style: none;
+            text-align: center;
+        }
+        nav li {
+            display: inline;
+            padding: 0 15px;
+        }
+        nav a {
+            color: #ecf0f1;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        .main-content {
+            padding: 20px 0;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .project {
+            background: #fff;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .project:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .social-links {
+            text-align: center;
+        }
+        .social-links a {
+            margin: 0 10px;
+            color: #3498db;
+            font-size: 24px;
+        }
+        .contact-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+        footer {
+            background: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 20px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+            header h1 {
+                font-size: 24px;
+            }
+            nav li {
+                display: block;
+                padding: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>{{name}} - Software Developer</h1>
+            <nav>
+                <ul>
+                    <li><a href="#summary">Summary</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#education">Education</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container main-content">
+        <!-- Professional Summary -->
+        <section id="summary" class="section">
+            <h2>Professional Summary</h2>
+            <p>{{summary}}</p>
+        </section>
+
+        <!-- Projects -->
+        <section id="projects" class="section">
+            <h2>Projects</h2>
+            <div class="project">
+                <h3>Project Name</h3>
+                <p>Description: {{project_description}}</p>
+                <p>Technologies Used: {{technologies}}</p>
+                <a href="{{project_link}}">View Project</a>
+            </div>
+            <!-- Add more projects here -->
+        </section>
+
+        <!-- Skills -->
+        <section id="skills" class="section">
+            <h2>Skills</h2>
+            <ul>
+                <li>{{skill1}}</li>
+                <li>{{skill2}}</li>
+                <!-- Add more skills here -->
+            </ul>
+        </section>
+
+        <!-- Experience -->
+        <section id="experience" class="section">
+            <h2>Experience</h2>
+            <div class="job">
+                <h3>{{job_title}} at {{company}}</h3>
+                <p>{{job_duration}}</p>
+                <ul>
+                    <li>{{job_responsibility1}}</li>
+                    <li>{{job_responsibility2}}</li>
+                    <!-- Add more responsibilities here -->
+                </ul>
+            </div>
+            <!-- Add more job experiences here -->
+        </section>
+
+        <!-- Education -->
+        <section id="education" class="section">
+            <h2>Education</h2>
+            <p>{{degree}} in {{major}} from {{university}}</p>
+            <!-- Add more education details here -->
+        </section>
+
+        <!-- Social Media Links -->
+        <div class="social-links">
+            <a href="{{linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="{{github}}" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="{{stackoverflow}}" target="_blank"><i class="fab fa-stack-overflow"></i></a>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="contact-info">
+            <p>Email: {{email}}</p>
+            <p>Phone: {{phone}}</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; {{year}} {{name}}. All rights reserved.</p>
+    </footer>
+</body>
+</html> 

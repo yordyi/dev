@@ -1,0 +1,3 @@
+[console_scripts]
+buku = buku:main
+bukuserver = bukuserver.server:cli

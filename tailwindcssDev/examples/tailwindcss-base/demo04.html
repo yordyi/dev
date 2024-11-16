@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>间距演示</title>
+    <link rel="stylesheet" href="./output.css" />
+  </head>
+  <body class="p-8">
+    <!-- 垂直间距 space-y-* -->
+    <div class="space-y-4">
+      <!-- 子元素之间有1rem间距 -->
+      <div class="bg-blue-200 p-4">第一个元素</div>
+      <div class="bg-blue-300 p-4">第二个元素</div>
+      <div class="bg-blue-400 p-4">第三个元素</div>
+    </div>
+    <!-- 卡片示例 -->
+    <div class="mt-8 max-w-sm rounded-lg bg-white p-6 shadow-lg">
+      <h3 class="text-xl font-bold text-gray-900">卡片标题</h3>
+      <p class="mt-2 text-gray-600">
+        这是一个简单的卡片示例，展示了基本的卡片布局和样式。包含标题、内容和按钮。
+      </p>
+      <button class="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
+        点击按钮
+      </button>
+    </div>
+
+    <!-- 水平间距 space-x-* -->
+    <div class="flex space-x-4 mt-8">
+      <!-- 子元素之间有1rem间距 -->
+      <div class="bg-red-200 p-4">左边</div>
+      <div class="bg-red-300 p-4">中间</div>
+      <div class="bg-red-400 p-4">右边</div>
+    </div>
+
+    <!-- 常见间距大小 -->
+    <div class="mt-8">
+      <div class="space-y-2">
+        <!-- 0.5rem = 8px -->
+        <div class="bg-gray-200 p-2">小间距</div>
+        <div class="bg-gray-200 p-2">8px</div>
+      </div>
+
+      <div class="space-y-4 mt-8">
+        <!-- 1rem = 16px -->
+        <div class="bg-gray-200 p-2">中等间距</div>
+        <div class="bg-gray-200 p-2">16px</div>
+      </div>
+
+      <div class="space-y-8 mt-8">
+        <!-- 2rem = 32px -->
+        <div class="bg-gray-200 p-2">大间距</div>
+        <div class="bg-gray-200 p-2">32px</div>
+      </div>
+    </div>
+  </body>
+</html>

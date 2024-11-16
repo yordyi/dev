@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "My Extension",
+  "version": "1.0",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+  },
+  "permissions": [
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+} 

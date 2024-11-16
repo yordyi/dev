@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apple Style Features</title>
+    <link rel="stylesheet" href="./output.css" />
+  </head>
+  <body class="bg-black text-white">
+    <!-- 1. 磨砂导航栏 -->
+    <nav
+      class="fixed top-0 w-full bg-black/80 backdrop-blur-md z-50 transition-all duration-300"
+      id="nav"
+    >
+      <div class="max-w-7xl mx-auto px-4 h-12 flex items-center justify-between">
+        <span class="text-white">Logo</span>
+        <!-- 2. 极简导航菜单 -->
+        <div class="hidden md:flex space-x-8 text-sm">
+          <a href="#" class="hover:text-gray-400 transition-colors">Mac</a>
+          <a href="#" class="hover:text-gray-400 transition-colors">iPad</a>
+          <a href="#" class="hover:text-gray-400 transition-colors">iPhone</a>
+          <a href="#" class="hover:text-gray-400 transition-colors">Watch</a>
+        </div>
+        <!-- 3. 移动端菜单按钮 -->
+        <button class="md:hidden" id="menu-btn">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-16 6h16"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- 4. 全屏产品展示 -->
+    <section class="h-screen flex items-center justify-center relative overflow-hidden">
+      <div class="text-center z-10 space-y-4">
+        <h1
+          class="text-5xl md:text-7xl font-bold opacity-0 transform translate-y-8 transition-all duration-1000"
+          id="main-title"
+        >
+          iPhone 15 Pro
+        </h1>
+        <!-- 5. 渐变文字效果 -->
+        <p
+          class="text-2xl bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent"
+        >
+          前所未有的强大
+        </p>
+        <!-- 6. 简约按钮 -->
+        <div class="flex justify-center gap-4 mt-8">
+          <button
+            class="px-8 py-3 rounded-full bg-white text-black hover:bg-gray-200 transition-colors"
+          >
+            立即购买
+          </button>
+          <button
+            class="px-8 py-3 rounded-full bg-black/20 backdrop-blur-md border border-white/30 hover:bg-white/10 transition-colors"
+          >
+            了解更多
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. 产品特性网格 -->
+    <section class="py-20 px-4">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div
+          class="group p-8 rounded-3xl bg-white/5 backdrop-blur-lg hover:bg-white/10 transition-all duration-300"
+        >
+          <div class="h-40 flex items-center justify-center">
+            <!-- 8. 悬浮动画 -->
+            <div
+              class="transform group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-300"
+            >
+              <img
+                src="../assets/IMG_8832.PNG"
+                alt="feature"
+                class="w-32 h-32 object-cover rounded-xl"
+              />
+            </div>
+          </div>
+          <h3 class="text-xl font-semibold mt-4">创新科技</h3>
+          <p class="text-gray-400 mt-2">突破性能极限</p>
+        </div>
+        <!-- 重复两个相似的卡片 -->
+        <div
+          class="group p-8 rounded-3xl bg-white/5 backdrop-blur-lg hover:bg-white/10 transition-all duration-300"
+        >
+          <div class="h-40 flex items-center justify-center">
+            <div
+              class="transform group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-300"
+            >
+              <img
+                src="../assets/IMG_8832.PNG"
+                alt="feature"
+                class="w-32 h-32 object-cover rounded-xl"
+              />
+            </div>
+          </div>
+          <h3 class="text-xl font-semibold mt-4">专业相机</h3>
+          <p class="text-gray-400 mt-2">卓越影像体验</p>
+        </div>
+        <div
+          class="group p-8 rounded-3xl bg-white/5 backdrop-blur-lg hover:bg-white/10 transition-all duration-300"
+        >
+          <div class="h-40 flex items-center justify-center">
+            <div
+              class="transform group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-300"
+            >
+              <img
+                src="../assets/IMG_8832.PNG"
+                alt="feature"
+                class="w-32 h-32 object-cover rounded-xl"
+              />
+            </div>
+          </div>
+          <h3 class="text-xl font-semibold mt-4">持久续航</h3>
+          <p class="text-gray-400 mt-2">全天候使用</p>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // 9. 页面加载动画
+      document.addEventListener('DOMContentLoaded', () => {
+        const title = document.getElementById('main-title')
+        setTimeout(() => {
+          title.classList.remove('opacity-0', 'translate-y-8')
+        }, 300)
+      })
+
+      // 10. 导航栏滚动效果
+      let lastScroll = 0
+      window.addEventListener('scroll', () => {
+        const nav = document.getElementById('nav')
+        const currentScroll = window.scrollY
+
+        // 向下滚动时隐藏导航栏，向上滚动时显示
+        if (currentScroll > lastScroll && currentScroll > 100) {
+          nav.style.transform = 'translateY(-100%)'
+        } else {
+          nav.style.transform = 'translateY(0)'
+        }
+
+        // 滚动时改变导航栏背景
+        if (currentScroll > 50) {
+          nav.classList.add('bg-black/90')
+        } else {
+          nav.classList.remove('bg-black/90')
+        }
+
+        lastScroll = currentScroll
+      })
+    </script>
+  </body>
+</html>

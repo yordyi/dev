@@ -1,0 +1,20 @@
+# Poetry 配置文件
+
+[tool.poetry]
+name = "fizz"  # 项目名称
+version = "0.1.0"  # 项目版本
+description = ""  # 项目描述（当前为空）
+authors = ["Chidi Williams <williamschidi1@gmail.com>"]  # 作者信息
+readme = "README.md"  # README 文件路径
+
+[tool.poetry.dependencies]
+python = "^3.10"  # Python 版本要求
+sounddevice = "^0.4.5"  # 音频设备库
+openai-whisper = { git = "https://github.com/openai/whisper.git" }  # OpenAI Whisper 语音识别库
+PyQt6 = "^6.4.0"  # PyQt6 GUI 库
+openai = "^0.26.5"  # OpenAI API 库
+soundfile = "^0.11.0"  # 音频文件处理库
+
+[build-system]
+requires = ["poetry-core"]  # 构建系统要求
+build-backend = "poetry.core.masonry.api"  # 构建后端

@@ -1,0 +1,13 @@
+{% extends 'admin/model/list.html' %}
+{% import 'bukuserver/lib.html' as buku with context %}
+
+{% block head %}
+  {{ super() }}
+  {{ buku.close_if_popup() }}
+{% endblock %}
+
+{% block model_menu_bar_before_filters %}
+  {{ super() }}
+  <form id="refresh" style="display:none" method="POST" action="refresh"></form>
+  <li><a href="#" onclick="refresh.submit()">{{ _gettext('Refresh') }}</a></li>
+{% endblock %}

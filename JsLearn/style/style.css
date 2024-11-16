@@ -1,0 +1,105 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  background-color: rgb(62, 74, 70);
+}
+h1 {
+  color: red;
+  text-align: center;
+}
+.box {
+  /* 盒子居中 */
+  background-color: rgb(144, 144, 160);
+  width: 800px;
+  height: 600px;
+  padding: 20px;
+  text-align: center;
+  margin: auto;
+  border: 10px solid red;
+  border-radius: 7%;
+}
+.box h1 {
+  color: yellow;
+  text-align: center;
+}
+#pbox {
+  box-sizing: border-box;
+  background-color: rgb(123, 108, 108);
+  padding: 10px;
+  margin: 10px;
+  border: 5px solid rgb(159, 130, 14);
+  border-radius: 5%;
+}
+.boss {
+  background-color: rgb(170, 4, 101);
+  box-sizing: border-box;
+  width: 800px;
+  height: 400px;
+  margin: 100px auto;
+  border: 5px solid rgb(40, 42, 200);
+}
+.boss p {
+  color: blue;
+}
+.boss > p {
+  font-size: 84px;
+}
+.boss + .bossdiv {
+  color: burlywood;
+  text-align: center;
+}
+h1 ~ p {
+  text-decoration: line-through;
+  text-align: center;
+  color: brown;
+}
+/* button {
+  color: rgb(201, 153, 64);
+  background-color: chartreuse;
+  border-radius: 10%;
+  width: 200px;
+  height: 100px;
+}
+button:hover {
+  background-color: brown;
+} */
+ul li:nth-child(2) {
+  font-size: 24px;
+}
+ul li:nth-last-child(3) {
+  color: aqua;
+}
+h1::before {
+  content: "å";
+  display: inline-block;
+  width: 20px;
+  height: 2px;
+  background-color: #333;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+h1::after {
+  content: "*";
+  color: red;
+  margin-left: 4px;
+}
+/* 选择所有具有 title 属性的元素 */
+[title] {
+  border: 1px solid black;
+}
+[href] {
+  text-decoration: none;
+  color: blueviolet;
+}
+[disabled] {
+  color: rgb(201, 153, 64);
+  background-color: chartreuse;
+  border-radius: 10%;
+  width: 200px;
+  height: 100px;
+}
+[target="_blank"] {
+  padding: 5px 10px;
+  background-color: rgb(195, 37, 77);
+}

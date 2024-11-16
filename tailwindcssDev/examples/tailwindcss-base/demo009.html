@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>现代网页布局示例</title>
+    <link rel="stylesheet" href="./output.css">
+</head>
+<body class="bg-gray-100">
+    <!-- 导航栏 -->
+    <nav class="sticky top-0 bg-white shadow-md z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-8">
+                    <span class="text-xl font-bold text-indigo-600">Logo</span>
+                    <div class="hidden md:flex space-x-4">
+                        <a href="#" class="text-gray-600 hover:text-indigo-600">首页</a>
+                        <a href="#" class="text-gray-600 hover:text-indigo-600">产品</a>
+                        <a href="#" class="text-gray-600 hover:text-indigo-600">关于</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+                        登录
+                    </button>
+                    <button class="md:hidden">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- 英雄区域 -->
+        <div class="bg-indigo-700 text-white rounded-xl p-8 mb-8">
+            <div class="max-w-2xl">
+                <h1 class="text-4xl font-bold mb-4">欢迎来到我们的网站</h1>
+                <p class="text-lg mb-6">这是一个使用 Tailwind CSS 构建的现代响应式网页示例</p>
+                <button class="bg-white text-indigo-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100">
+                    了解更多
+                </button>
+            </div>
+        </div>
+
+        <!-- 卡片网格 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <!-- 卡片1 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div class="h-48 bg-gray-300"></div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">特色功能一</h3>
+                    <p class="text-gray-600">这是特色功能一的详细描述，介绍其主要特点和优势。</p>
+                </div>
+            </div>
+            <!-- 卡片2 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div class="h-48 bg-gray-300"></div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">特色功能二</h3>
+                    <p class="text-gray-600">这是特色功能二的详细描述，介绍其主要特点和优势。</p>
+                </div>
+            </div>
+            <!-- 卡片3 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div class="h-48 bg-gray-300"></div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">特色功能三</h3>
+                    <p class="text-gray-600">这是特色功能三的详细描述，介绍其主要特点和优势。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 特性列表 -->
+        <div class="bg-white rounded-xl shadow-lg p-8">
+            <h2 class="text-2xl font-bold mb-6">为什么选择我们？</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white">
+                            ✓
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">高质量服务</h3>
+                        <p class="text-gray-600">我们提供最优质的服务，确保客户满意。</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white">
+                            ✓
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">专业团队</h3>
+                        <p class="text-gray-600">拥有经验丰富的专业团队为您服务。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-800 text-white mt-12">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">关于我们</h4>
+                    <p class="text-gray-400">这是一个示例网站，展示了现代网页设计和响应式布局。</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">快速链接</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">首页</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">产品</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">关于</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">联系我们</h4>
+                    <ul class="space-y-2">
+                        <li class="text-gray-400">邮箱：contact@example.com</li>
+                        <li class="text-gray-400">电话：123-456-7890</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 示例网站. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tailwind布局演示</title>
+    <link rel="stylesheet" href="./output.css" />
+  </head>
+  <body>
+    <div class="container mx-auto px-5">
+      <!-- 粘性定位 -->
+      <div class="sticky top-0 bg-green-500 p-3 mb-3 text-white">这是粘性定位的头部</div>
+
+      <!-- 定位演示 -->
+      <h2 class="text-xl font-bold mb-3">定位演示</h2>
+      <div class="relative h-52 bg-gray-100 mb-5">
+        <div
+          class="relative left-5 top-5 w-12 h-12 bg-blue-500 text-white flex items-center justify-center"
+        >
+          相对
+        </div>
+        <div
+          class="absolute right-5 top-5 w-12 h-12 bg-blue-500 text-white flex items-center justify-center"
+        >
+          绝对
+        </div>
+      </div>
+      <div
+        class="fixed bottom-5 right-5 w-12 h-12 bg-red-500 text-white flex items-center justify-center"
+      >
+        固定
+      </div>
+
+      <!-- 显示属性演示 -->
+      <h2 class="text-xl font-bold mb-3">显示属性演示</h2>
+      <div class="mb-5">
+        <div class="block bg-gray-400 p-3 mb-3">块级元素</div>
+        <span class="inline bg-yellow-400 p-1">行内元素1</span>
+        <span class="inline bg-yellow-400 p-1">行内元素2</span>
+        <div class="inline-block bg-orange-500 p-3 m-1">行内块元素1</div>
+        <div class="inline-block bg-orange-500 p-3 m-1">行内块元素2</div>
+      </div>
+
+      <!-- Flex布局演示 -->
+      <h2 class="text-xl font-bold mb-3">Flex布局演示</h2>
+      <div class="flex gap-3 mb-5">
+        <div class="flex-1 p-5 bg-purple-500 text-white">Flex项目1</div>
+        <div class="flex-1 p-5 bg-purple-500 text-white">Flex项目2</div>
+        <div class="flex-1 p-5 bg-purple-500 text-white">Flex项目3</div>
+      </div>
+
+      <!-- Grid布局演示 -->
+      <h2 class="text-xl font-bold mb-3">Grid布局演示</h2>
+      <div class="grid grid-cols-3 gap-3 mb-5">
+        <div class="p-5 bg-teal-500 text-white">Grid项目1</div>
+        <div class="p-5 bg-teal-500 text-white">Grid项目2</div>
+        <div class="p-5 bg-teal-500 text-white">Grid项目3</div>
+        <div class="p-5 bg-teal-500 text-white">Grid项目4</div>
+        <div class="p-5 bg-teal-500 text-white">Grid项目5</div>
+        <div class="p-5 bg-teal-500 text-white">Grid项目6</div>
+      </div>
+
+      <!-- 溢出控制演示 -->
+      <h2 class="text-xl font-bold mb-3">溢出控制演示</h2>
+      <div class="flex gap-5">
+        <div class="w-48 h-24 border-2 border-gray-700 p-3 overflow-auto">
+          <div class="w-72">
+            这是一段很长的文本，会导致内容溢出。这是一段很长的文本，会导致内容溢出。
+            这是一段很长的文本，会导致内容溢出。这是一段很长的文本，会导致内容溢出。
+          </div>
+        </div>
+        <div class="w-48 h-24 border-2 border-gray-700 p-3 overflow-hidden">
+          <div class="w-72">
+            这是一段很长的文本，会导致内容溢出。这是一段很长的文本，会导致内容溢出。
+            这是一段很长的文本，会导致内容溢出。这是一段很长的文本，会导致内容溢出。
+          </div>
+        </div>
+        <div class="w-48 h-24 border-2 border-gray-700 p-3 overflow-scroll">
+          <div class="w-72">
+            这是一段很长的文本，会导致内容溢出。这是一段很长的文本，会导致内容溢出。
+            这是一段很长的文本，会导致内容溢出。这是一段很长的文本，会导致内容溢出。
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

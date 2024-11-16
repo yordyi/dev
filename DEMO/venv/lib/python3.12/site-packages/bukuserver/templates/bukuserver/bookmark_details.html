@@ -1,0 +1,9 @@
+{% extends 'admin/model/details.html' %}
+{% import 'bukuserver/lib.html' as buku with context %}
+
+{% block tail %}
+  {{ super() }}
+  {{ buku.details_formatting() }}
+  {{ buku.link_saved() }}
+  {{ buku.limit_navigation_if_popup() }}
+{% endblock %}

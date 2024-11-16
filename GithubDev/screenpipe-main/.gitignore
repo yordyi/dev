@@ -1,0 +1,43 @@
+# Binaries for programs and examples
+*.exe
+*.exe~
+*.dll
+*.dylib
+*.so
+
+# Test binary, built with `cargo test`
+*.test
+
+# Rust/Cargo specific files
+*target
+*Cargo.lock
+
+# IDE specific files
+.idea/
+.vscode/
+*.rs.bk
+
+# act cli
+.secrets
+
+# db 
+data/ 
+text_json/
+
+# Ignore package-lock.json in the vercel-ai-chatbot example
+examples/typescript/vercel-ai-chatbot/package-lock.json
+
+# Unignore
+!screenpipe-vision/lib/libscreenpipe*.dylib
+
+# Tauri signing key
+tauri_key_louis.key
+pnpm-lock.yaml
+
+.DS_Store
+
+# Ignore onnxruntime-win-x64-gpu libraries
+onnxruntime-win-x64-gpu*/
+
+# ignore environment variables
+.env

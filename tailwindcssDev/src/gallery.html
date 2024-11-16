@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./output.css" />
+  </head>
+  <body>
+    <!-- 响应式图片画廊 -->
+    <div class="container mx-auto px-4 py-8">
+      <!-- 画廊网格 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- 正方形卡片 -->
+        <div class="group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+          <div class="aspect-square relative">
+            <img
+              src="https://picsum.photos/800/800"
+              alt="正方形图片"
+              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            />
+            <div
+              class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+            >
+              <span class="text-white text-lg">1:1 比例</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 16:9 视频比例卡片 -->
+        <div class="group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+          <div class="aspect-video relative">
+            <img
+              src="https://picsum.photos/1600/900"
+              alt="视频比例图片"
+              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            />
+            <div
+              class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+            >
+              <span class="text-white text-lg">16:9 比例</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4:3 自定义比例卡片 -->
+        <div class="group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+          <div class="aspect-[4/3] relative">
+            <img
+              src="https://picsum.photos/800/600"
+              alt="4:3比例图片"
+              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            />
+            <div
+              class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+            >
+              <span class="text-white text-lg">4:3 比例</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

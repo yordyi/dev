@@ -1,0 +1,10 @@
+/* 支持多种颜色格式 */
+.color1 {
+  background-color: #ff0000;
+} /* 十六进制格式 */
+.color2 {
+  background-color: hsl(120, 100%, 50%);
+} /* HSL色相-饱和度-亮度格式 */
+.color3 {
+  background-color: rgba(0, 4, 255, 0.733);
+} /* RGBA红绿蓝-透明度格式 */

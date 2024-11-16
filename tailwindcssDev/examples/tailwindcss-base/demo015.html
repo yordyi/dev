@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Display 属性演示</title>
+    <link rel="stylesheet" href="./output.css" />
+  </head>
+  <body class="p-8">
+    <!-- Block 示例 - 想象成"霸道总裁",独占整行 -->
+    <div class="mb-8">
+      <h2 class="text-xl font-bold mb-2">1. Block 示例</h2>
+      <div class="block bg-blue-200 p-4 mb-2">我是块级元素 1 - 独占一行</div>
+      <div class="block bg-blue-300 p-4">我是块级元素 2 - 也独占一行</div>
+    </div>
+
+    <!-- Inline 示例 - 想象成"好朋友",手牵手一起 -->
+    <div class="mb-8">
+      <h2 class="text-xl font-bold mb-2">2. Inline 示例</h2>
+      <span class="inline bg-green-200 p-2">内联元素 1</span>
+      <span class="inline bg-green-300 p-2">内联元素 2</span>
+      <span class="inline bg-green-400 p-2">内联元素 3</span>
+    </div>
+
+    <!-- Inline-block 示例 - 想象成"社交达人",既合群又有自己的空间 -->
+    <div class="mb-8">
+      <h2 class="text-xl font-bold mb-2">3. Inline-block 示例</h2>
+      <div class="inline-block bg-yellow-200 p-4 mr-2">行内块 1</div>
+      <div class="inline-block bg-yellow-300 p-4 mr-2">行内块 2</div>
+      <div class="inline-block bg-yellow-400 p-4">行内块 3</div>
+    </div>
+
+    <!-- Flex 示例 - 想象成"瑜伽达人",超级灵活 -->
+    <div class="mb-8">
+      <h2 class="text-xl font-bold mb-2">4. Flex 示例</h2>
+      <div class="flex gap-4">
+        <div class="bg-purple-200 p-4 flex-1">Flex 项目 1</div>
+        <div class="bg-purple-300 p-4 flex-1">Flex 项目 2</div>
+        <div class="bg-purple-400 p-4 flex-1">Flex 项目 3</div>
+      </div>
+    </div>
+
+    <!-- Grid 示例 - 想象成"井字棋盘",整齐有序 -->
+    <div class="mb-8">
+      <h2 class="text-xl font-bold mb-2">5. Grid 示例</h2>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="bg-red-200 p-4">Grid 项目 1</div>
+        <div class="bg-red-300 p-4">Grid 项目 2</div>
+        <div class="bg-red-400 p-4">Grid 项目 3</div>
+        <div class="bg-red-200 p-4">Grid 项目 4</div>
+        <div class="bg-red-300 p-4">Grid 项目 5</div>
+        <div class="bg-red-400 p-4">Grid 项目 6</div>
+      </div>
+    </div>
+
+    <!-- Hidden 示例 - 想象成"隐身衣" -->
+    <div>
+      <h2 class="text-xl font-bold mb-2">6. Hidden 示例</h2>
+      <div class="bg-gray-200 p-4">可见元素</div>
+      <div class="hidden bg-gray-400 p-4">我被隐藏了!</div>
+    </div>
+  </body>
+</html>

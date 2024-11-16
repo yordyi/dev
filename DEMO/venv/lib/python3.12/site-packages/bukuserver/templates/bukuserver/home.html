@@ -1,0 +1,74 @@
+{% extends "admin/index.html" %}
+{% import 'bukuserver/lib.html' as buku with context %}
+
+{% block head %}
+  {{ super() }}
+  {{ buku.close_if_popup() }}
+{% endblock %}
+
+{% block menu_links %}
+{{ super() }}
+<form class="navbar-form navbar-right" action="{{url_for('bookmark.index_view')}}" method="GET">
+  <div class="form-group">
+    <input type="text" class="form-control" id="inputKeywords" placeholder="Search bookmark" name="flt1_buku_search">
+  </div>
+  <button type="submit" class="btn btn-default">Search</button>
+</form>
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+<main class="container">
+  <div style="padding: 40px 15px; text-align: center;">
+    <h1>BUKU</h1>
+    <p class="lead">Bookmark manager like a text-based mini-web</p>
+    <p>
+      <a class="btn btn-lg btn-success" href="{{url_for('bookmark.index_view')}}" role="button">Bookmarks</a>
+      <a class="btn btn-lg btn-success" href="{{url_for('tag.index_view')}}" role="button">Tags</a>
+      <a class="btn btn-lg btn-success" href="{{url_for('statistic.index')}}" role="button">Statistics</a>
+    </p>
+    <div class=" col-md-4 col-md-offset-4">
+      <form class="form-horizontal" action="{{url_for('admin.search')}}" method="POST">
+        <div class="form-group">
+          {{form.keyword.label}}
+          {{form.keyword()}}
+        </div>
+        <div class="text-left col-sm-offset-2">
+          <div class="form-group"> {{form.deep()}} {{form.deep.label}} </div>
+          <div class="form-group"> {{form.regex()}} {{form.regex.label}} </div>
+        </div>
+        <button type="submit" class="btn btn-default">Search</button>
+      </form>
+    </div>
+    <div class=" col-md-4 col-md-offset-4">
+      <p style="padding-top: 2em"> Bookmarklet:
+        <a title="Drag this link to your bookmarks toolbar" href="{{ buku.bookmarklet() }}">
+          <b>✚ Add to Buku</b>
+        </a><br/>
+        <em style="font-size: smaller">Note: if you select text on the page before activating the bookmarklet, it'll be used as description instead of page metadata.</em>
+      </p>
+    </div>
+
+    <details class="col-md-6 col-md-offset-3">
+      <summary style="display: list-item;  cursor: pointer"> <em><strong>Location Bar (keyboard-only) shortcut</strong></em> </summary>
+      <dl>
+        <dt>in Firefox:</dt>
+        <dd>Open the bookmarks editor and set <code>@buku</code> in the Keyword field of the bookmarklet.</dd>
+
+        <dt>in Chrome:</dt>
+        <dd>
+          In <em>Settings &gt; Search engine &gt; Manage… &gt; Site Search</em>, add a new row
+          (by placing <code>✚ Add to Buku</code>, <code>@buku</code>, and the copied bookmarklet URL in respective fields).
+        </dd>
+
+        <dt>usage:</dt>
+        <dd>
+          By hitting <code>Ctrl+L</code> (thus switching to Location Bar), then typing <code>@buku</code>
+          and hitting <code>Enter</code>, you'll be able to open the bookmarklet dialog via keyboard only.<br/>
+          <em style="font-size: smaller">Note: in Firefox this changes displayed URL, but you can reset it by switching back to Location Bar and hitting <code>Esc</code> twice.</em>
+        </dd>
+      </dl>
+    </details>
+  </div>
+</main>
+{% endblock %}

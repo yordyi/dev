@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./output.css">
+</head>
+<body>
+    <!-- 英雄区域 - bg-cover 示例 -->
+    <div class="h-screen w-screen bg-[url('../assets/IMG_8832.PNG')] bg-cover bg-center bg-no-repeat">
+        <div class="flex items-center justify-center h-full bg-black/30">
+            <h1 class="text-white text-6xl">全屏背景效果</h1>
+        </div>
+    </div>
+    
+    <!-- 三种不同效果对比 -->
+    <div class="grid grid-cols-3 gap-4 p-4">
+        <!-- bg-cover 示例 -->
+        <div class="h-64 bg-[url('../assets/IMG_8832.PNG')] bg-cover rounded-lg shadow-lg">
+            <div class="p-4">
+                <h2 class="text-white">Cover - 填满效果</h2>
+            </div>
+        </div>
+
+        <!-- bg-contain 示例 -->
+        <div class="h-64 bg-gray-100 bg-[url('../assets/IMG_8832.PNG')] bg-contain bg-center bg-no-repeat">
+            <div class="p-4">
+                <h2>Contain - 完整显示</h2>
+            </div>
+        </div>
+
+        <!-- bg-center 示例 -->
+        <div class="h-64 bg-[url('../assets/IMG_8832.PNG')] bg-cover bg-center rounded-lg">
+            <div class="bg-black/50 h-full p-4">
+                <h2 class="text-white">Center - 居中裁剪</h2>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ajax</title>
+  </head>
+  <body>
+    <button onclick="getData();">按钮</button>
+    <div id="result"></div>
+    <script>
+      function getData() {
+        fetch(
+          "https://raw.githubusercontent.com/yordyi/icost/refs/heads/main/tsconfig.json"
+        )
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            console.log(data);
+            let result = document.querySelector("#result");
+            result.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+          });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,96 @@
+[package]
+name = "screenpipe-vision"
+version = { workspace = true }
+authors = { workspace = true }
+description = { workspace = true }
+repository = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde_json = "1.0"
+
+# async
+tokio = { workspace = true }
+
+# Image processing
+image = { workspace = true }
+
+# OCR
+rusty-tesseract = { git = "https://github.com/louis030195/rusty-tesseract.git", branch = "main" }
+
+anyhow = "1.0.86"
+
+# Log
+log = { workspace = true }
+
+image-compare = "0.4.1"
+strsim = "0.10.0"
+clap = { version = "4.0", features = ["derive"] }
+# tokio = { version = "1", features = ["full"] }
+
+# Integrations
+screenpipe-integrations = { path = "../screenpipe-integrations" }
+
+tracing-subscriber = { workspace = true }
+tracing = { workspace = true }
+
+[dev-dependencies]
+tempfile = "3.3.0"
+criterion = { workspace = true }
+assert_cmd = "2.0.14"
+predicates = "3.1.0"
+assert_fs = "1.1.1"
+strsim = "0.10.0"
+memory-stats = "1.2.0"
+
+# websocket example
+futures-util = "0.3"
+tokio-tungstenite = "0.20"
+serde = "1.0.200"
+base64 = "0.22.1"
+
+[build-dependencies]
+cc = "1.0"
+
+[package.metadata.osx]
+framework = ["Vision", "AppKit"]
+
+[[bin]]
+name = "screenpipe-vision"
+path = "src/bin/screenpipe-vision.rs"
+
+[[bench]]
+name = "vision_benchmark"
+harness = false
+
+[[bench]]
+name = "ocr_benchmark"
+harness = false
+
+[[bench]]
+name = "apple_leak_bench"
+harness = false
+
+[[example]]
+name = "screenpipe-vision-websocket"
+path = "examples/websocket.rs"
+
+
+[target.'cfg(target_os = "windows")'.dependencies]
+windows = { version = "0.58", features = ["Graphics_Imaging", "Media_Ocr", "Storage", "Storage_Streams"] }
+xcap = "0.0.12"
+
+[target.'cfg(target_os = "macos")'.dependencies]
+libc = "0.2"
+xcap = "0.0.13" # memory leak fix, also for some reason 0.0.13 doesn't work on windows
+
+[target.'cfg(target_os = "linux")'.dependencies]
+libc = "0.2"
+xcap = "0.0.12"
+
+[target.'cfg(target_env = "msvc")'.dependencies.vcpkg]
+version = "0.2"
